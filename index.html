@@ -88,8 +88,33 @@ h2{font-size:clamp(26px,3vw,36px);line-height:1.2}
 .finale-screen{background:var(--black);color:var(--white)}.finale-inner{text-align:center;max-width:1050px}.eyebrow.light{color:var(--white)}.finale-inner h1{margin-left:auto;margin-right:auto;max-width:920px}.final-name{margin:40px 0;font-size:clamp(46px,8vw,100px);font-weight:600;line-height:.9;letter-spacing:-.06em}.final-name span{color:var(--red)}.final-lead{max-width:720px;margin:0 auto 30px;font-size:clamp(19px,2.5vw,27px)}.final-mantra{display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;margin:30px 0;font-weight:600;letter-spacing:.08em}.final-mantra i{font-style:normal;color:var(--red)}.final-actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}.final-foot{margin-top:30px;font-size:12px;color:#bbb}
 .modal{width:min(820px,calc(100% - 30px));max-height:calc(100svh - 40px);border:0;padding:0;background:transparent}.modal::backdrop{background:rgba(0,0,0,.72)}.modal-card{background:var(--white);border:1px solid var(--black);border-width:1px 6px 6px 1px;padding:0;max-height:calc(100svh - 40px);overflow:auto}.modal-head{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;padding:26px 28px;border-bottom:1px solid var(--line)}.modal-head h2{margin:6px 0 0;font-size:32px}.modal-close{width:44px;height:44px;border:1px solid var(--black);background:var(--white);font-size:30px;line-height:1}.modal-close:hover{background:var(--black);color:var(--white)}.instruction-block{padding:26px 28px;display:grid;gap:14px}.instruction-block p{margin:0;padding:14px 0;border-bottom:1px solid var(--line)}.instruction-block p:last-child{border-bottom:0}.modal-footer{padding:20px 28px;border-top:1px solid var(--line);display:flex;justify-content:flex-end}.knowledge-list{padding:20px 28px}.knowledge-file{width:100%;display:grid;grid-template-columns:48px 1fr auto;gap:12px;align-items:center;text-align:left;background:var(--white);border:0;border-bottom:1px solid var(--line);min-height:72px;padding:10px 0}.knowledge-file span:nth-child(2){display:flex;flex-direction:column}.knowledge-file small{font-size:12px;font-weight:400}.knowledge-file i{font-style:normal;font-size:24px;transition:transform .2s}.knowledge-file.is-open i{transform:rotate(45deg)}.file-icon{width:42px;height:42px;display:grid;place-items:center;background:var(--grey);font-size:10px;font-weight:600}.knowledge-detail{display:none;background:var(--soft);padding:16px 18px;margin:0 0 10px 48px;font-size:14px}.knowledge-detail.is-open{display:block}.knowledge-detail p{margin:5px 0 0}.download-steps{padding:28px;display:grid;gap:16px}.download-steps div{display:grid;grid-template-columns:42px 1fr;gap:14px;align-items:start}.download-steps span{width:36px;height:36px;display:grid;place-items:center;background:var(--black);color:var(--white);font-weight:600}.download-steps p{margin:5px 0 0}.download-modal .fact-note{margin:0 28px 20px}
 .toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);background:var(--black);color:var(--white);padding:10px 14px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:100;font-size:13px}.toast.show{opacity:1;transform:translate(-50%,0)}
+
+body.conversation-open{overflow:hidden}
+.conversation-stage[hidden]{display:none!important}
+.conversation-stage{position:fixed;inset:0;z-index:250;background:var(--bg);height:100dvh;display:flex;flex-direction:column}
+.conversation-stage-top{flex:0 0 auto;min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:10px clamp(18px,4vw,42px);background:var(--bg);border-bottom:1px solid var(--line)}
+.stage-brand{display:flex;align-items:center;gap:14px;min-width:0}.stage-brand strong{font-size:20px;letter-spacing:-.03em}.stage-brand span{padding-left:14px;border-left:1px solid var(--black);font-size:11px;font-weight:600;letter-spacing:.08em;white-space:nowrap}
+.stage-close{border:0;background:transparent;color:var(--black);min-height:44px;padding:8px 0;border-bottom:2px solid var(--red);font-weight:500}
+.conversation-stage-main{flex:1;min-height:0;padding:18px clamp(18px,4vw,42px) 22px;display:flex}
+.conversation-stage-shell{width:100%;max-width:980px;margin:0 auto;min-height:0;display:flex}
+.stage-chat-panel{width:100%;height:100%;min-height:0!important}
+.stage-chat-panel .panel-title-row{flex:0 0 auto}.stage-chat-panel .chat-log{flex:1;min-height:0!important;max-height:none!important;overflow-y:auto;overscroll-behavior:contain}
+.stage-chat-panel .composer-wrap{flex:0 0 auto;background:var(--white);padding-bottom:max(14px,env(safe-area-inset-bottom))}
+.stage-finish{max-width:none!important;margin:0!important;border-top:1px solid var(--black);flex:0 0 auto}.stage-finish .btn{white-space:nowrap}
+.toast{z-index:400}
 @media (max-width:1050px){.agent-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.demo-workspace{grid-template-columns:1fr}.chat-panel,.preview-panel{min-height:520px}.resource-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.resource-grid div{border-bottom:1px solid var(--line)}.resource-grid div:nth-child(2){border-right:0}.use-grid{grid-template-columns:1fr}.use-card{min-height:0}.three-actions{grid-template-columns:1fr}.action-card{min-height:180px}.hero-grid{grid-template-columns:1fr}.hero-panel{max-width:720px}.access-grid{grid-template-columns:1fr}}
 @media (max-width:760px){.demo-start-card,.conversation-finish{align-items:stretch;flex-direction:column}.demo-start-card .btn,.conversation-finish .btn{width:100%}.demo-start-card{padding:20px}.chat-panel.chat-only{min-height:580px}.chat-panel.chat-only .chat-log{min-height:430px;max-height:520px}.result-intro{grid-template-columns:1fr}.topbar{padding:10px 16px;min-height:64px}.progress-wrap{top:64px}.brand-lab{display:none}.concept-badge{display:none}.screen{padding:34px 16px 50px;min-height:calc(100svh - 68px)}h1{font-size:36px}.lead{font-size:18px}.agent-grid,.company-grid,.cost-compare,.cost-drivers{grid-template-columns:1fr}.choice-card,.company-card{min-height:0}.company-card{grid-template-columns:58px 1fr}.company-monogram{width:54px;height:54px;font-size:19px}.company-card .card-status{grid-column:2}.guided-target{margin-top:32px}.lab-context{grid-template-columns:1fr}.demo-workspace{display:block}.preview-panel{margin-top:18px}.chat-log{max-height:430px}.composer-wrap{grid-template-columns:1fr}.send-btn{min-height:48px}.download-zone{align-items:flex-start;flex-direction:column}.resource-group-head{flex-direction:column;align-items:flex-start}.resource-grid{grid-template-columns:1fr}.resource-grid div{border-right:0}.cost-card{min-height:0}.screen-nav{align-items:stretch}.screen-nav .btn{width:100%}.finale-inner{text-align:left}.final-mantra,.final-actions{justify-content:flex-start}.modal-head,.instruction-block,.knowledge-list,.modal-footer{padding-left:18px;padding-right:18px}.modal-head h2{font-size:26px}.knowledge-detail{margin-left:0}.topbar-meta{gap:8px}.restart-link{font-size:12px}}
+
+@media (max-width:760px){
+  .conversation-stage{height:100dvh}
+  .conversation-stage-top{min-height:58px;padding:7px 12px}.stage-brand strong{font-size:18px}.stage-brand span{display:none}.stage-close{font-size:13px;min-height:40px}
+  .conversation-stage-main{padding:0;min-height:0}.conversation-stage-shell{max-width:none}
+  .stage-chat-panel{border-left:0;border-right:0;border-bottom:0}
+  .stage-chat-panel .panel-title-row{min-height:50px;padding:9px 12px;gap:8px}.stage-chat-panel .panel-title-row strong{font-size:15px}.stage-chat-panel .safe-pill{font-size:9px;padding:4px 6px}
+  .stage-chat-panel .chat-log{padding:12px;gap:10px}.stage-chat-panel .bubble{max-width:88%;font-size:13px;line-height:1.48;padding:10px 11px}.stage-chat-panel .avatar{width:28px;height:28px;flex-basis:28px;font-size:9px}
+  .stage-chat-panel .composer-wrap{padding:9px 10px max(9px,env(safe-area-inset-bottom));grid-template-columns:1fr}.stage-chat-panel .composer{min-height:58px;padding:10px 11px;font-size:13px}
+  .stage-finish{padding:14px 12px max(14px,env(safe-area-inset-bottom));align-items:stretch;flex-direction:column;gap:12px}.stage-finish strong{font-size:17px}.stage-finish span{font-size:12px}.stage-finish .btn{width:100%;white-space:normal}
+}
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.coachmark{animation:none}.composer-cursor{animation:none}}
 
 </style>
@@ -234,7 +259,7 @@ h2{font-size:clamp(26px,3vw,36px);line-height:1.2}
             <div>
               <span class="card-kicker">STYRD KONCEPTDEMO</span>
               <h2>Se konversationen spelas upp</h2>
-              <p>Du beh&ouml;ver inte skriva n&aring;got sj&auml;lv. Klicka p&aring; start s&aring; ser du hur fr&aring;gor, svar och en handritad skiss byggs upp steg f&ouml;r steg.</p>
+              <p>Du beh&ouml;ver inte skriva n&aring;got sj&auml;lv. N&auml;r du startar &ouml;ppnas chatten i en egen vy och fr&aring;gor, svar och den handritade skissen byggs upp steg f&ouml;r steg.</p>
             </div>
             <button class="btn btn-primary guided-target" id="startConversation" type="button">
               <span class="coachmark">B&ouml;rja h&auml;r <span aria-hidden="true">&darr;</span></span>
@@ -242,43 +267,8 @@ h2{font-size:clamp(26px,3vw,36px);line-height:1.2}
             </button>
           </div>
 
-          <div class="conversation-shell">
-            <section class="chat-panel chat-only" aria-label="Simulerad AI-chatt">
-              <div class="panel-title-row"><strong>Konversation med agenten</strong><span class="safe-pill">FIKTIV DATA &middot; KONCEPTDEMO</span></div>
-              <div class="chat-log" id="chatLog" aria-live="polite">
-                <div class="chat-placeholder" id="chatPlaceholder">
-                  <strong>Konversationen har inte startat &auml;nnu.</strong>
-                  <span>Klicka p&aring; knappen ovan f&ouml;r att spela upp demon.</span>
-                </div>
-              </div>
-
-              <div class="composer-wrap conversation-composer" id="composerWrap">
-                <div class="composer" id="composer" aria-label="Simulerad chattruta">
-                  <span class="composer-text" id="composerText">N&auml;r anv&auml;ndaren skriver visas texten h&auml;r...</span>
-                  <span class="composer-cursor" id="composerCursor" aria-hidden="true"></span>
-                  <span class="attachment-mini" id="attachmentMini" hidden>
-                    <span class="mini-sketch" aria-hidden="true"><i></i><i></i><i></i></span>
-                    min-skiss.jpg
-                  </span>
-                </div>
-              </div>
-            </section>
-          </div>
-
-          <div class="conversation-finish" id="conversationFinish" hidden>
-            <div>
-              <strong>Agenten har skapat ett utkast.</strong>
-              <span>Nu l&auml;mnar vi chatten och tittar p&aring; sj&auml;lva arbetsprodukten.</span>
-            </div>
-            <button class="btn btn-light guided-target" type="button" data-go="5">
-              <span class="coachmark">N&auml;sta steg <span aria-hidden="true">&darr;</span></span>
-              Se vad agenten skapade <span aria-hidden="true">&rarr;</span>
-            </button>
-          </div>
-
-          <div class="screen-nav split-nav">
+          <div class="screen-nav">
             <button class="btn btn-outline" type="button" data-go="3">&larr; Till agenten</button>
-            <button class="btn btn-outline" type="button" id="replayConversation" hidden>Spela upp konversationen igen</button>
           </div>
         </div>
       </section>
@@ -431,6 +421,50 @@ h2{font-size:clamp(26px,3vw,36px);line-height:1.2}
         </div>
       </section>
     </main>
+
+  <div class="conversation-stage" id="conversationStage" role="dialog" aria-modal="true" aria-labelledby="conversationStageTitle" aria-hidden="true" hidden>
+    <div class="conversation-stage-top">
+      <div class="stage-brand"><strong>NOVIA</strong><span>AI BUSINESS LAB</span></div>
+      <button class="stage-close" id="closeConversationStage" type="button">Avsluta demo</button>
+    </div>
+    <div class="conversation-stage-main">
+      <div class="conversation-stage-shell">
+        <section class="chat-panel chat-only stage-chat-panel" aria-label="Simulerad AI-chatt">
+          <div class="panel-title-row">
+            <strong id="conversationStageTitle">Konversation med agenten</strong>
+            <span class="safe-pill">FIKTIV DATA &middot; KONCEPTDEMO</span>
+          </div>
+          <div class="chat-log" id="chatLog" aria-live="polite">
+            <div class="chat-placeholder" id="chatPlaceholder">
+              <strong>Konversationen startar strax.</strong>
+              <span>F&ouml;lj texten i chatten och i skrivf&auml;ltet nedan.</span>
+            </div>
+          </div>
+          <div class="composer-wrap conversation-composer" id="composerWrap">
+            <div class="composer" id="composer" aria-label="Simulerad chattruta">
+              <span class="composer-text" id="composerText">Konversationen startar...</span>
+              <span class="composer-cursor" id="composerCursor" aria-hidden="true"></span>
+              <span class="attachment-mini" id="attachmentMini" hidden>
+                <span class="mini-sketch" aria-hidden="true"><i></i><i></i><i></i></span>
+                min-skiss.jpg
+              </span>
+            </div>
+          </div>
+          <div class="conversation-finish stage-finish" id="conversationFinish" hidden>
+            <div>
+              <strong>Agenten har skapat ett utkast.</strong>
+              <span>Nu l&auml;mnar vi chatten och tittar p&aring; sj&auml;lva arbetsprodukten.</span>
+            </div>
+            <button class="btn btn-light guided-target" id="showConversationResult" type="button">
+              <span class="coachmark">N&auml;sta steg <span aria-hidden="true">&darr;</span></span>
+              Se vad agenten skapade <span aria-hidden="true">&rarr;</span>
+            </button>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
   </div>
 
   <dialog class="modal" id="instructionsModal" aria-labelledby="instructionsTitle">
@@ -539,8 +573,11 @@ h2{font-size:clamp(26px,3vw,36px);line-height:1.2}
   });
 
   var startConversation = document.getElementById('startConversation');
-  var replayConversation = document.getElementById('replayConversation');
+  var conversationStage = document.getElementById('conversationStage');
+  var closeConversationStageButton = document.getElementById('closeConversationStage');
+  var showConversationResult = document.getElementById('showConversationResult');
   var chatPlaceholder = document.getElementById('chatPlaceholder');
+  var composerWrap = document.getElementById('composerWrap');
   var composer = document.getElementById('composer');
   var composerText = document.getElementById('composerText');
   var attachmentMini = document.getElementById('attachmentMini');
@@ -548,41 +585,57 @@ h2{font-size:clamp(26px,3vw,36px);line-height:1.2}
   var conversationFinish = document.getElementById('conversationFinish');
   var emailFrameWrap = document.getElementById('emailFrameWrap');
   var emailFrame = document.getElementById('emailFrame');
+  var conversationRunId = 0;
 
-  startConversation.addEventListener('click',function(){
-    if(typingStarted){return;}
-    runConversationDemo();
-  });
+  function isRunActive(runId){return runId === conversationRunId;}
 
-  replayConversation.addEventListener('click',function(){
-    resetConversationOnly();
-    runConversationDemo();
-  });
-
-  function wait(ms){
-    // This is a user-started concept demo. Keep the staged timing even if the
-    // device has 'Reduce Motion' enabled; reducedMotion is still respected for
-    // scrolling and other non-essential movement.
-    return new Promise(function(resolve){window.setTimeout(resolve,ms);});
+  function openConversationStage(){
+    conversationStage.hidden = false;
+    conversationStage.setAttribute('aria-hidden','false');
+    document.body.classList.add('conversation-open');
+    window.setTimeout(function(){closeConversationStageButton.focus({preventScroll:true});},40);
   }
 
-  function typeTextAsync(target,text,speed){
+  function closeConversationStage(resetFirst){
+    if(resetFirst !== false){resetConversationOnly();}
+    conversationStage.hidden = true;
+    conversationStage.setAttribute('aria-hidden','true');
+    document.body.classList.remove('conversation-open');
+  }
+
+  function startFreshConversation(){
+    // Every press starts a completely fresh run. Incrementing the run id also
+    // invalidates any old timers that may still be alive in Safari/BFCache.
+    resetConversationOnly();
+    openConversationStage();
+    var runId = conversationRunId;
+    runConversationDemo(runId);
+  }
+
+  startConversation.addEventListener('click',startFreshConversation);
+  closeConversationStageButton.addEventListener('click',function(){closeConversationStage(true);});
+  showConversationResult.addEventListener('click',function(){
+    closeConversationStage(false);
+    goTo(5);
+  });
+
+  function wait(ms,runId){
     return new Promise(function(resolve){
-      target.textContent = '';
-      if(speed === 0){target.textContent = text;scrollChat();resolve();return;}
-      var i = 0;
-      function next(){
-        target.textContent += text.charAt(i);
-        i += 1;
-        scrollChat();
-        if(i < text.length){
-          var ch = text.charAt(i-1);
-          var extra = /[.!?]/.test(ch) ? speed*4 : (ch === ',' ? speed*2 : 0);
-          window.setTimeout(next,speed+extra);
-        }else{resolve();}
-      }
-      next();
+      window.setTimeout(function(){resolve(isRunActive(runId));},ms);
     });
+  }
+
+  async function typeTextAsync(target,text,speed,runId){
+    target.textContent = '';
+    for(var i=0;i<text.length;i+=1){
+      if(!isRunActive(runId)){return false;}
+      target.textContent += text.charAt(i);
+      scrollChat();
+      var ch = text.charAt(i);
+      var extra = /[.!?]/.test(ch) ? speed*4 : (ch === ',' ? speed*2 : 0);
+      if(!(await wait(speed+extra,runId))){return false;}
+    }
+    return true;
   }
 
   function makeSketch(){
@@ -593,7 +646,8 @@ h2{font-size:clamp(26px,3vw,36px);line-height:1.2}
     return sketch;
   }
 
-  function addMessageShell(kind){
+  function addMessageShell(kind,runId){
+    if(!isRunActive(runId)){return null;}
     var wrapper = document.createElement('div');
     wrapper.className = 'message ' + (kind === 'user' ? 'user-message' : 'assistant-message agent-step');
     var avatar = document.createElement('div');
@@ -613,13 +667,15 @@ h2{font-size:clamp(26px,3vw,36px);line-height:1.2}
     return bubble;
   }
 
-  async function addAgentTyped(text){
-    var bubble = addMessageShell('agent');
-    await typeTextAsync(bubble,text,18);
-    await wait(700);
+  async function addAgentTyped(text,runId){
+    var bubble = addMessageShell('agent',runId);
+    if(!bubble){return false;}
+    if(!(await typeTextAsync(bubble,text,18,runId))){return false;}
+    return await wait(700,runId);
   }
 
-  function addThinking(){
+  function addThinking(runId){
+    if(!isRunActive(runId)){return;}
     var wrapper = document.createElement('div');
     wrapper.className = 'message assistant-message agent-step';
     wrapper.id = 'thinkingMessage';
@@ -633,78 +689,83 @@ h2{font-size:clamp(26px,3vw,36px);line-height:1.2}
     if(node){node.remove();}
   }
 
-  async function typeUserAndSend(text,withSketch){
+  async function typeUserAndSend(text,withSketch,runId){
+    if(!isRunActive(runId)){return false;}
     composer.classList.add('is-typing');
     composerText.textContent = '';
     attachmentMini.hidden = true;
-    await typeTextAsync(composerText,text,22);
+    if(!(await typeTextAsync(composerText,text,22,runId))){return false;}
     if(withSketch){
-      await wait(450);
+      if(!(await wait(450,runId))){return false;}
       attachmentMini.hidden = false;
-      await wait(900);
+      if(!(await wait(900,runId))){return false;}
     }else{
-      await wait(450);
+      if(!(await wait(450,runId))){return false;}
     }
-    var bubble = addMessageShell('user');
+    var bubble = addMessageShell('user',runId);
+    if(!bubble){return false;}
     bubble.appendChild(document.createTextNode(text));
     if(withSketch){bubble.appendChild(makeSketch());}
     composer.classList.remove('is-typing');
     composerText.textContent = 'N\u00e4sta meddelande...';
     attachmentMini.hidden = true;
-    await wait(750);
+    return await wait(750,runId);
   }
 
-  async function runConversationDemo(){
+  async function runConversationDemo(runId){
     typingStarted = true;
     chatFinished = false;
     startConversation.disabled = true;
     startConversation.classList.remove('guided-target');
-    replayConversation.hidden = true;
     conversationFinish.hidden = true;
+    composerWrap.hidden = false;
     chatLog.innerHTML = '';
-    if(chatPlaceholder){chatPlaceholder.hidden = true;}
     composerText.textContent = 'Konversationen startar...';
     attachmentMini.hidden = true;
+    chatLog.scrollTop = 0;
 
-    await addAgentTyped('Hej! Jag hj\u00e4lper Bosses Verkstad att skapa snygga marknadsf\u00f6ringsmejl. Du beh\u00f6ver inte kunna design eller HTML. Vad vill du g\u00f6ra?');
-    await typeUserAndSend('Hej! Jag skulle vilja skicka n\u00e5got till v\u00e5ra kunder om h\u00f6stservice, men jag vet inte riktigt hur mejlet borde se ut.',false);
-    await addAgentTyped('Det fixar vi tillsammans. Vill du fr\u00e4mst 1) informera om h\u00f6stservice, 2) f\u00e5 kunder att boka tid eller 3) b\u00e5de informera och f\u00e5 fler bokningar?');
-    await typeUserAndSend('B\u00e5de och. Vi har 20 % rabatt p\u00e5 servicearbete i oktober.',false);
-    await addAgentTyped('Bra. D\u00e5 kan jag g\u00f6ra ett tydligt kampanjmejl utan att det k\u00e4nns f\u00f6r reklamigt. Vilken k\u00e4nsla vill du ha: professionell, energisk eller varm och personlig?');
-    await typeUserAndSend('Varm och personlig tror jag. Jag har ocks\u00e5 ritat ungef\u00e4r hur jag t\u00e4nkte.',true);
-    await addAgentTyped('Tack! Jag tolkar skissen som en logotyp \u00f6verst, en tydlig rubrik, en tv\u00e5delad mittsektion och en bokningsknapp. I Bosses grafiska profil hittar jag m\u00f6rkbl\u00e5tt och orange. Jag f\u00f6resl\u00e5r rubriken \u201cRedo f\u00f6r h\u00f6sten?\u201d och knappen \u201cBoka service\u201d.');
-    await typeUserAndSend('Ja, det l\u00e5ter bra. Men g\u00f6r det inte f\u00f6r reklamigt.',false);
-    await addAgentTyped('Absolut. Jag h\u00e5ller tonen varm och rak, skriver tydligt att rabatten g\u00e4ller arbetskostnaden och hittar inte p\u00e5 priser eller lediga tider. Jag skapar utkastet nu.');
-    addThinking();
-    await wait(1800);
+    if(!(await wait(350,runId))){return;}
+    if(!(await addAgentTyped('Hej! Jag hj\u00e4lper Bosses Verkstad att skapa snygga marknadsf\u00f6ringsmejl. Du beh\u00f6ver inte kunna design eller HTML. Vad vill du g\u00f6ra?',runId))){return;}
+    if(!(await typeUserAndSend('Hej! Jag skulle vilja skicka n\u00e5got till v\u00e5ra kunder om h\u00f6stservice, men jag vet inte riktigt hur mejlet borde se ut.',false,runId))){return;}
+    if(!(await addAgentTyped('Det fixar vi tillsammans. Vill du fr\u00e4mst 1) informera om h\u00f6stservice, 2) f\u00e5 kunder att boka tid eller 3) b\u00e5de informera och f\u00e5 fler bokningar?',runId))){return;}
+    if(!(await typeUserAndSend('B\u00e5de och. Vi har 20 % rabatt p\u00e5 servicearbete i oktober.',false,runId))){return;}
+    if(!(await addAgentTyped('Bra. D\u00e5 kan jag g\u00f6ra ett tydligt kampanjmejl utan att det k\u00e4nns f\u00f6r reklamigt. Vilken k\u00e4nsla vill du ha: professionell, energisk eller varm och personlig?',runId))){return;}
+    if(!(await typeUserAndSend('Varm och personlig tror jag. Jag har ocks\u00e5 ritat ungef\u00e4r hur jag t\u00e4nkte.',true,runId))){return;}
+    if(!(await addAgentTyped('Tack! Jag tolkar skissen som en logotyp \u00f6verst, en tydlig rubrik, en tv\u00e5delad mittsektion och en bokningsknapp. I Bosses grafiska profil hittar jag m\u00f6rkbl\u00e5tt och orange. Jag f\u00f6resl\u00e5r rubriken \u201cRedo f\u00f6r h\u00f6sten?\u201d och knappen \u201cBoka service\u201d.',runId))){return;}
+    if(!(await typeUserAndSend('Ja, det l\u00e5ter bra. Men g\u00f6r det inte f\u00f6r reklamigt.',false,runId))){return;}
+    if(!(await addAgentTyped('Absolut. Jag h\u00e5ller tonen varm och rak, skriver tydligt att rabatten g\u00e4ller arbetskostnaden och hittar inte p\u00e5 priser eller lediga tider. Jag skapar utkastet nu.',runId))){return;}
+    addThinking(runId);
+    if(!(await wait(1800,runId))){removeThinking();return;}
     removeThinking();
-    await addAgentTyped('Klart! Jag har skapat ett responsivt marknadsf\u00f6ringsmejl. Det \u00e4r fortfarande ett utkast \u2013 en m\u00e4nniska granskar det innan n\u00e5got anv\u00e4nds eller skickas.');
+    if(!(await addAgentTyped('Klart! Jag har skapat ett responsivt marknadsf\u00f6ringsmejl. Det \u00e4r fortfarande ett utkast \u2013 en m\u00e4nniska granskar det innan n\u00e5got anv\u00e4nds eller skickas.',runId))){return;}
+    if(!isRunActive(runId)){return;}
 
     composer.classList.remove('is-typing');
     composerText.textContent = 'Konversationen \u00e4r klar.';
     chatFinished = true;
+    typingStarted = false;
+    composerWrap.hidden = true;
     conversationFinish.hidden = false;
-    replayConversation.hidden = false;
     startConversation.disabled = false;
-    showToast('Konversationen \u00e4r klar. Klicka p\u00e5 \u201cSe vad agenten skapade\u201d.');
-    conversationFinish.scrollIntoView({behavior:reducedMotion?'auto':'smooth',block:'center'});
   }
 
   function scrollChat(){chatLog.scrollTop = chatLog.scrollHeight;}
 
   function resetConversationOnly(){
+    conversationRunId += 1;
     removeThinking();
     typingStarted = false;
     chatFinished = false;
     startConversation.disabled = false;
     startConversation.classList.add('guided-target');
     conversationFinish.hidden = true;
-    replayConversation.hidden = true;
-    chatLog.innerHTML = '<div class="chat-placeholder" id="chatPlaceholder"><strong>Konversationen har inte startat \u00e4nnu.</strong><span>Klicka p\u00e5 knappen ovan f\u00f6r att spela upp demon.</span></div>';
+    composerWrap.hidden = false;
+    chatLog.innerHTML = '<div class="chat-placeholder" id="chatPlaceholder"><strong>Konversationen startar strax.</strong><span>F\u00f6lj texten i chatten och i skrivf\u00e4ltet nedan.</span></div>';
     chatPlaceholder = document.getElementById('chatPlaceholder');
     composer.classList.remove('is-typing');
-    composerText.textContent = 'N\u00e4r anv\u00e4ndaren skriver visas texten h\u00e4r...';
+    composerText.textContent = 'Konversationen startar...';
     attachmentMini.hidden = true;
+    chatLog.scrollTop = 0;
   }
 
   function renderEmailPreview(){
@@ -779,15 +840,28 @@ h2{font-size:clamp(26px,3vw,36px);line-height:1.2}
 
   function resetDemo(){
     resetConversationOnly();
+    closeConversationStage(false);
     emailFrame.srcdoc = '';
     emailFrameWrap.classList.remove('mobile-mode');
     document.querySelectorAll('[data-preview]').forEach(function(b){b.classList.toggle('is-selected',b.getAttribute('data-preview')==='desktop');});
   }
 
   window.addEventListener('keydown',function(event){
+    if(event.key === 'Escape' && !conversationStage.hidden){closeConversationStage(true);return;}
     if(event.key === 'Escape'){return;}
     if(event.altKey && event.key === 'ArrowRight' && currentScreen < totalScreens-1){goTo(currentScreen+1);}
     if(event.altKey && event.key === 'ArrowLeft' && currentScreen > 0){goTo(currentScreen-1);}
+  });
+
+  window.addEventListener('pageshow',function(event){
+    if(event.persisted){
+      resetConversationOnly();
+      closeConversationStage(false);
+    }
+  });
+
+  window.addEventListener('pagehide',function(){
+    conversationRunId += 1;
   });
 
   goTo(0);
