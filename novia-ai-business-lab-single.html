@@ -1,0 +1,757 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <meta name="description" content="Novia AI Business Lab - interaktiv konceptdemo">
+  <title>Novia AI Business Lab - Concept Demo</title>
+  <style>
+@font-face{font-family:'Be Vietnam Pro';src:url('https://novia-linda.github.io/demo-tanja/be-vietnam-pro-v12-latin-regular.woff2') format('woff2');font-style:normal;font-weight:400;font-display:swap}
+@font-face{font-family:'Be Vietnam Pro';src:url('https://novia-linda.github.io/demo-tanja/be-vietnam-pro-v12-latin-500.woff2') format('woff2');font-style:normal;font-weight:500;font-display:swap}
+@font-face{font-family:'Be Vietnam Pro';src:url('https://novia-linda.github.io/demo-tanja/be-vietnam-pro-v12-latin-600.woff2') format('woff2');font-style:normal;font-weight:600;font-display:swap}
+:root{--black:#000;--white:#fff;--bg:#fafafa;--grey:#e5e5e5;--soft:#eaeaea;--line:#ccc;--darkline:#4c4c4c;--button:#3d3d3d;--red:#ff1325;--navy:#102c46;--orange:#ef6b2e;--max:1280px;--text:16px;--shadow:1px 6px 0 #000}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;background:var(--bg)}
+body{margin:0;color:var(--black);background:var(--bg);font-family:'Be Vietnam Pro',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif;font-size:16px;line-height:1.5}
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+button:disabled{cursor:not-allowed}
+button:focus-visible,a:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--red);outline-offset:3px}
+.app-shell{min-height:100svh}
+.topbar{position:sticky;top:0;z-index:50;min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:12px clamp(20px,4vw,50px);background:rgba(250,250,250,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.brand-button{display:flex;align-items:center;gap:14px;border:0;background:transparent;padding:8px 0;color:var(--black);min-height:44px}
+.brand-novia{font-size:22px;font-weight:600;letter-spacing:-.03em}
+.brand-lab{padding-left:14px;border-left:1px solid var(--black);font-size:12px;font-weight:600;letter-spacing:.08em}
+.topbar-meta{display:flex;align-items:center;gap:16px}
+.concept-badge{display:inline-flex;align-items:center;min-height:32px;padding:4px 10px;background:var(--grey);font-size:11px;font-weight:600;letter-spacing:.09em}
+.restart-link{border:0;background:transparent;color:var(--black);min-height:44px;padding:8px 0;border-bottom:2px solid var(--red);font-weight:500}
+.progress-wrap{position:sticky;top:72px;z-index:49;height:4px;background:var(--grey)}
+.progress-bar{height:100%;width:11.11%;background:var(--red);transition:width .45s ease}
+main{display:block}
+.screen{min-height:calc(100svh - 76px);display:none;align-items:center;padding:50px clamp(20px,4vw,50px) 70px}
+.screen.is-active{display:flex;animation:screenIn .42s ease both}
+.screen-inner{width:100%;max-width:var(--max);margin:0 auto}
+.screen-inner.wide{max-width:1280px}
+.screen-inner.ultra-wide{max-width:1480px}
+@keyframes screenIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.eyebrow{margin:0 0 16px;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
+h1,h2,h3{margin-top:0;font-weight:600;letter-spacing:-.03em}
+h1{font-size:clamp(36px,5vw,64px);line-height:1.08;margin-bottom:24px;max-width:1000px}
+h2{font-size:clamp(26px,3vw,36px);line-height:1.2}
+.lead,.section-intro{font-size:clamp(18px,2.2vw,24px);line-height:1.55;max-width:850px;margin:0 0 32px}
+.micro-note{font-size:13px;max-width:750px;margin:18px 0 0}.center-note{text-align:center;margin:24px auto 0}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(340px,.65fr);gap:clamp(40px,7vw,100px);align-items:center}
+.hero-copy h1{max-width:900px}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:12px 24px;border:1px solid var(--black);font-weight:500;text-decoration:none;transition:background .2s,color .2s,border-color .2s,transform .2s}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--black);color:var(--white)}.btn-primary:hover{background:#333}
+.btn-outline{background:transparent;color:var(--black)}.btn-outline:hover{background:var(--black);color:var(--white)}
+.btn-light{background:var(--white);color:var(--black);border-color:var(--white)}.btn-light:hover{background:#e6e6e6}
+.btn-light-outline{background:transparent;color:var(--white);border-color:var(--white)}.btn-light-outline:hover{background:var(--white);color:var(--black)}
+.hero-panel{background:var(--white);border:1px solid var(--black);border-width:1px 6px 6px 1px;padding:32px;display:grid;gap:0}
+.hero-step{display:grid;grid-template-columns:58px 1fr;gap:14px;padding:22px 0;border-bottom:1px solid var(--line)}.hero-step:last-child{border-bottom:0}
+.hero-step-no{font-weight:600;font-size:14px}.hero-step div{display:grid;gap:4px}.hero-step strong{font-size:19px}.hero-step span:last-child{font-size:14px}.hero-step-accent{border-left:5px solid var(--red);padding-left:20px}
+.section-head{margin-bottom:40px}.compact-head{margin-bottom:24px}.section-head h1{margin-bottom:18px}.section-intro{font-size:18px;margin-bottom:0}
+.agent-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.choice-card,.company-card,.action-card{position:relative;text-align:left;color:var(--black);background:var(--white);border:1px solid var(--line);padding:28px;min-height:210px;display:flex;flex-direction:column;gap:10px;transition:border-color .2s,transform .2s,background .2s}
+.choice-card strong,.company-card strong,.action-card strong{font-size:23px;line-height:1.2;letter-spacing:-.03em}
+.choice-card>span:not(.coachmark):not(.card-kicker):not(.card-status),.company-card div>span:last-child,.action-card>span:not(.coachmark):not(.action-no):not(.action-arrow){font-size:15px}
+.choice-card:disabled,.company-card:disabled{opacity:.56;background:#f6f6f6}
+.active-choice{border-color:var(--black)!important;border-width:1px 6px 6px 1px!important;box-shadow:none}.active-choice:hover,.active-choice:focus-visible{border-color:var(--red)!important;transform:translateY(-2px)}
+.card-kicker{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+.card-status{margin-top:auto;align-self:flex-start;background:var(--grey);padding:5px 8px;font-size:10px;font-weight:600;letter-spacing:.08em}.card-status.live{background:var(--black);color:var(--white)}
+.guided-target{margin-top:28px}.coachmark{position:absolute;top:-34px;left:18px;background:var(--red);color:var(--white);padding:6px 10px;font-size:12px;font-weight:600;z-index:2;box-shadow:3px 3px 0 var(--black);white-space:nowrap;animation:pulseCoach 1.6s ease-in-out infinite}
+@keyframes pulseCoach{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+.screen-nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:40px;flex-wrap:wrap}.split-nav{margin-top:24px}
+.company-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.company-card{min-height:190px;display:grid;grid-template-columns:72px 1fr;grid-template-rows:1fr auto;column-gap:20px;align-items:start}.company-card .card-status{grid-column:2}.company-monogram{width:68px;height:68px;display:grid;place-items:center;background:var(--black);color:var(--white);font-size:24px;font-weight:600;letter-spacing:-.04em}.company-monogram.small{width:60px;height:60px;font-size:20px}
+.company-card div{display:flex;flex-direction:column;gap:8px}
+.lab-context{display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:start;margin-bottom:40px}.lab-context h1{font-size:clamp(34px,4vw,52px);margin-bottom:14px}.lab-context p{max-width:850px;margin:0;font-size:18px}
+.three-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}.action-card{min-height:250px;border-color:var(--black)}.action-card:hover{background:var(--black);color:var(--white);transform:translateY(-2px)}.action-card .coachmark{color:var(--white)}.action-no{font-size:14px;font-weight:600}.action-arrow{margin-top:auto;font-size:28px}
+.principle-strip{margin-top:28px;display:flex;gap:16px;flex-wrap:wrap;align-items:center;background:var(--black);color:var(--white);padding:18px 22px;font-size:12px;font-weight:600;letter-spacing:.08em}.principle-strip i{font-style:normal;color:var(--red);font-size:20px}
+.demo-workspace{display:grid;grid-template-columns:minmax(430px,.82fr) minmax(520px,1.18fr);gap:20px;align-items:stretch}.chat-panel,.preview-panel{background:var(--white);border:1px solid var(--black);min-height:610px;display:flex;flex-direction:column}.panel-title-row{min-height:58px;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 18px;border-bottom:1px solid var(--line)}.safe-pill{background:var(--grey);padding:5px 8px;font-size:10px;font-weight:600;letter-spacing:.08em}
+.chat-log{flex:1;overflow:auto;padding:20px;display:flex;flex-direction:column;gap:14px;background:#fcfcfc;min-height:380px;max-height:480px}.message{display:flex;gap:10px;align-items:flex-start}.message.user-message{justify-content:flex-end}.avatar{width:32px;height:32px;display:grid;place-items:center;background:var(--black);color:var(--white);font-size:11px;font-weight:600;flex:0 0 32px}.bubble{max-width:82%;padding:12px 14px;border:1px solid var(--line);background:var(--white);font-size:14px;line-height:1.55}.user-message .bubble{background:var(--black);color:var(--white);border-color:var(--black)}.agent-step .bubble{border-left:4px solid var(--red)}
+.thinking{display:inline-flex;gap:4px;align-items:center}.thinking i{width:5px;height:5px;border-radius:50%;background:var(--black);animation:dot 1.2s infinite}.thinking i:nth-child(2){animation-delay:.15s}.thinking i:nth-child(3){animation-delay:.3s}@keyframes dot{0%,60%,100%{opacity:.2;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+.chat-sketch{margin-top:10px;background:#fff;color:#000;border:1px solid #aaa;padding:10px;width:180px}.chat-sketch .paper-line{height:6px;background:#111;margin:6px 0}.chat-sketch .paper-line.short{width:55%}.chat-sketch .paper-split{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:8px 0}.chat-sketch .paper-box{height:44px;border:2px solid #111}.chat-sketch .paper-button{width:70px;height:16px;border:2px solid #111;margin:10px auto 0}
+.composer-wrap{position:relative;padding:14px;border-top:1px solid var(--line);display:grid;grid-template-columns:1fr auto;gap:10px}.composer-coach{position:absolute;bottom:100%;left:18px;background:var(--red);color:var(--white);padding:6px 9px;font-size:11px;font-weight:600;box-shadow:3px 3px 0 var(--black);z-index:3;animation:pulseCoach 1.6s ease-in-out infinite}.composer{min-height:66px;text-align:left;background:var(--white);border:1px solid var(--darkline);padding:12px 14px;display:flex;align-items:center;gap:4px;flex-wrap:wrap;color:#555}.composer.is-typing{color:var(--black)}.composer-text{white-space:pre-wrap}.composer-cursor{display:none;width:2px;height:20px;background:var(--black);animation:blink .8s step-end infinite}.composer.is-typing .composer-cursor{display:inline-block}@keyframes blink{50%{opacity:0}}.attachment-mini{flex-basis:100%;display:flex;align-items:center;gap:8px;margin-top:8px;padding:6px 8px;background:var(--soft);font-size:12px;color:var(--black)}.mini-sketch{width:32px;height:24px;background:#fff;border:1px solid #999;padding:3px;display:grid;gap:2px}.mini-sketch i{display:block;height:2px;background:#111}.send-btn{align-self:stretch}.send-btn:disabled{opacity:.35;transform:none}
+.view-toggle{display:flex;border:1px solid var(--black)}.toggle-btn{border:0;background:var(--white);min-height:34px;padding:6px 10px;font-size:12px}.toggle-btn+ .toggle-btn{border-left:1px solid var(--black)}.toggle-btn.is-selected{background:var(--black);color:var(--white)}
+.preview-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:30px;color:#555}.preview-empty-icon{width:70px;height:70px;display:grid;place-items:center;border:1px solid var(--black);font-weight:600;color:var(--black)}
+.email-frame-wrap{flex:1;display:flex;align-items:flex-start;justify-content:center;padding:20px;background:#e9e9e9;overflow:auto;transition:all .3s}.email-frame-wrap.mobile-mode{padding-left:10px;padding-right:10px}.email-frame-wrap iframe{width:100%;max-width:760px;height:520px;border:0;background:#fff;box-shadow:0 0 0 1px #bbb;transition:max-width .35s}.email-frame-wrap.mobile-mode iframe{max-width:390px}
+.download-zone{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:16px 18px;border-top:1px solid var(--line);background:var(--white)}.download-zone>div{display:flex;flex-direction:column;gap:3px}.download-zone strong{font-size:16px}.download-zone span:last-child{font-size:12px}
+.use-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}.use-card{background:var(--white);border:1px solid var(--black);padding:30px;min-height:390px}.use-card.accented{border-width:1px 6px 6px 1px}.use-no{display:inline-block;margin-bottom:40px;font-size:13px;font-weight:600}.use-card h2{font-size:30px;margin-bottom:14px}.use-card p{font-size:16px}.use-card ul{padding-left:20px;margin-top:24px}.use-card li{margin:8px 0}
+.architecture{max-width:980px;margin:0 auto 30px;text-align:center}.arch-top{display:inline-block;background:var(--black);color:var(--white);padding:14px 24px;font-size:13px;font-weight:600;letter-spacing:.08em}.arch-arrow{font-size:28px;line-height:1;margin:12px 0}.resource-group-box{text-align:left;border:2px solid var(--black);padding:0;background:var(--white)}.resource-group-head{padding:18px 22px;border-bottom:1px solid var(--black);display:flex;justify-content:space-between;align-items:center;gap:15px}.resource-group-head span{font-size:11px;font-weight:600;letter-spacing:.1em}.resource-group-head strong{font-size:22px}.resource-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0}.resource-grid div{padding:24px;border-right:1px solid var(--line)}.resource-grid div:last-child{border-right:0}.resource-grid strong,.resource-grid span{display:block}.resource-grid strong{margin-bottom:8px}.resource-grid span{font-size:13px}
+.access-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:30px}.access-grid article{background:var(--white);border:1px solid var(--line);padding:24px}.access-label{display:inline-block;background:var(--grey);padding:5px 8px;font-size:10px;font-weight:600;letter-spacing:.09em}.access-grid h2{font-size:24px;margin:20px 0 10px}.access-grid p{margin:0;font-size:14px}.fact-note{margin-top:24px;background:var(--soft);padding:18px 20px;border-left:5px solid var(--red)}
+.cost-compare{display:grid;grid-template-columns:1fr 1fr;gap:20px}.cost-card{position:relative;background:var(--white);border:1px solid var(--black);padding:32px;min-height:320px}.cost-card.positive{border-width:1px 6px 6px 1px}.cost-card.crossed:after{content:"";position:absolute;left:8%;right:8%;top:48%;height:4px;background:var(--red);transform:rotate(-7deg);transform-origin:center}.big-equation{display:grid;grid-template-columns:auto 1fr;gap:0 14px;align-items:baseline;margin:35px 0}.big-equation strong{font-size:54px;letter-spacing:-.05em}.big-equation span{font-size:15px}.big-equation i{grid-column:1/-1;font-style:normal;font-size:28px;margin:6px 0}.cost-card p{max-width:560px}.cost-drivers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:24px}.cost-drivers div{background:var(--soft);padding:22px}.cost-drivers span{font-size:12px;font-weight:600}.cost-drivers strong{display:block;margin:10px 0 6px;font-size:18px}.cost-drivers p{margin:0;font-size:13px}
+.finale-screen{background:var(--black);color:var(--white)}.finale-inner{text-align:center;max-width:1050px}.eyebrow.light{color:var(--white)}.finale-inner h1{margin-left:auto;margin-right:auto;max-width:920px}.final-name{margin:40px 0;font-size:clamp(46px,8vw,100px);font-weight:600;line-height:.9;letter-spacing:-.06em}.final-name span{color:var(--red)}.final-lead{max-width:720px;margin:0 auto 30px;font-size:clamp(19px,2.5vw,27px)}.final-mantra{display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;margin:30px 0;font-weight:600;letter-spacing:.08em}.final-mantra i{font-style:normal;color:var(--red)}.final-actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}.final-foot{margin-top:30px;font-size:12px;color:#bbb}
+.modal{width:min(820px,calc(100% - 30px));max-height:calc(100svh - 40px);border:0;padding:0;background:transparent}.modal::backdrop{background:rgba(0,0,0,.72)}.modal-card{background:var(--white);border:1px solid var(--black);border-width:1px 6px 6px 1px;padding:0;max-height:calc(100svh - 40px);overflow:auto}.modal-head{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;padding:26px 28px;border-bottom:1px solid var(--line)}.modal-head h2{margin:6px 0 0;font-size:32px}.modal-close{width:44px;height:44px;border:1px solid var(--black);background:var(--white);font-size:30px;line-height:1}.modal-close:hover{background:var(--black);color:var(--white)}.instruction-block{padding:26px 28px;display:grid;gap:14px}.instruction-block p{margin:0;padding:14px 0;border-bottom:1px solid var(--line)}.instruction-block p:last-child{border-bottom:0}.modal-footer{padding:20px 28px;border-top:1px solid var(--line);display:flex;justify-content:flex-end}.knowledge-list{padding:20px 28px}.knowledge-file{width:100%;display:grid;grid-template-columns:48px 1fr auto;gap:12px;align-items:center;text-align:left;background:var(--white);border:0;border-bottom:1px solid var(--line);min-height:72px;padding:10px 0}.knowledge-file span:nth-child(2){display:flex;flex-direction:column}.knowledge-file small{font-size:12px;font-weight:400}.knowledge-file i{font-style:normal;font-size:24px;transition:transform .2s}.knowledge-file.is-open i{transform:rotate(45deg)}.file-icon{width:42px;height:42px;display:grid;place-items:center;background:var(--grey);font-size:10px;font-weight:600}.knowledge-detail{display:none;background:var(--soft);padding:16px 18px;margin:0 0 10px 48px;font-size:14px}.knowledge-detail.is-open{display:block}.knowledge-detail p{margin:5px 0 0}.download-steps{padding:28px;display:grid;gap:16px}.download-steps div{display:grid;grid-template-columns:42px 1fr;gap:14px;align-items:start}.download-steps span{width:36px;height:36px;display:grid;place-items:center;background:var(--black);color:var(--white);font-weight:600}.download-steps p{margin:5px 0 0}.download-modal .fact-note{margin:0 28px 20px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);background:var(--black);color:var(--white);padding:10px 14px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:100;font-size:13px}.toast.show{opacity:1;transform:translate(-50%,0)}
+@media (max-width:1050px){.agent-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.demo-workspace{grid-template-columns:1fr}.chat-panel,.preview-panel{min-height:520px}.resource-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.resource-grid div{border-bottom:1px solid var(--line)}.resource-grid div:nth-child(2){border-right:0}.use-grid{grid-template-columns:1fr}.use-card{min-height:0}.three-actions{grid-template-columns:1fr}.action-card{min-height:180px}.hero-grid{grid-template-columns:1fr}.hero-panel{max-width:720px}.access-grid{grid-template-columns:1fr}}
+@media (max-width:760px){.topbar{padding:10px 16px;min-height:64px}.progress-wrap{top:64px}.brand-lab{display:none}.concept-badge{display:none}.screen{padding:34px 16px 50px;min-height:calc(100svh - 68px)}h1{font-size:36px}.lead{font-size:18px}.agent-grid,.company-grid,.cost-compare,.cost-drivers{grid-template-columns:1fr}.choice-card,.company-card{min-height:0}.company-card{grid-template-columns:58px 1fr}.company-monogram{width:54px;height:54px;font-size:19px}.company-card .card-status{grid-column:2}.guided-target{margin-top:32px}.lab-context{grid-template-columns:1fr}.demo-workspace{display:block}.preview-panel{margin-top:18px}.chat-log{max-height:430px}.composer-wrap{grid-template-columns:1fr}.send-btn{min-height:48px}.download-zone{align-items:flex-start;flex-direction:column}.resource-group-head{flex-direction:column;align-items:flex-start}.resource-grid{grid-template-columns:1fr}.resource-grid div{border-right:0}.cost-card{min-height:0}.screen-nav{align-items:stretch}.screen-nav .btn{width:100%}.finale-inner{text-align:left}.final-mantra,.final-actions{justify-content:flex-start}.modal-head,.instruction-block,.knowledge-list,.modal-footer{padding-left:18px;padding-right:18px}.modal-head h2{font-size:26px}.knowledge-detail{margin-left:0}.topbar-meta{gap:8px}.restart-link{font-size:12px}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.coachmark{animation:none}.composer-cursor{animation:none}}
+
+</style>
+</head>
+<body>
+  <div class="app-shell" id="appShell">
+    <header class="topbar">
+      <button class="brand-button" id="brandHome" type="button" aria-label="Till startsidan">
+        <span class="brand-novia">NOVIA</span>
+        <span class="brand-lab">AI BUSINESS LAB</span>
+      </button>
+      <div class="topbar-meta">
+        <span class="concept-badge">KONCEPTDEMO</span>
+        <button class="restart-link" id="restartTop" type="button">B&ouml;rja om</button>
+      </div>
+    </header>
+
+    <div class="progress-wrap" aria-hidden="true">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <main id="mainContent">
+      <section class="screen is-active" data-screen="0" aria-labelledby="introTitle">
+        <div class="screen-inner hero-grid">
+          <div class="hero-copy">
+            <p class="eyebrow">EN VISION F&Ouml;R FRAMTIDENS AI-L&Auml;RANDE</p>
+            <h1 id="introTitle">T&auml;nk om vi hade ett AI-labb d&auml;r f&ouml;retag och studerande kunde prova framtidens AI?</h1>
+            <p class="lead">Utan egen AI-infrastruktur. Utan att b&ouml;rja med k&auml;nsliga data. Utan att varje deltagare beh&ouml;ver en egen Copilot-licens.</p>
+            <div class="hero-actions">
+              <button class="btn btn-primary" type="button" data-go="1">G&aring; in i AI Business Lab <span aria-hidden="true">&rarr;</span></button>
+            </div>
+            <p class="micro-note">Styrd interaktiv konceptdemo. Allt f&ouml;retagsinneh&aring;ll &auml;r fiktivt.</p>
+          </div>
+          <div class="hero-panel" aria-label="Tre steg i AI Business Lab">
+            <div class="hero-step">
+              <span class="hero-step-no">01</span>
+              <div><strong>TESTA</strong><span>F&auml;rdiga AI-agenter</span></div>
+            </div>
+            <div class="hero-step">
+              <span class="hero-step-no">02</span>
+              <div><strong>F&Ouml;RST&Aring;</strong><span>Instruktioner, kunskap och gr&auml;nser</span></div>
+            </div>
+            <div class="hero-step hero-step-accent">
+              <span class="hero-step-no">03</span>
+              <div><strong>TILL&Auml;MPA</strong><span>Hitta nyttan i det egna f&ouml;retaget</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" data-screen="1" aria-labelledby="agentTitle" hidden>
+        <div class="screen-inner wide">
+          <div class="section-head">
+            <p class="eyebrow">AI BUSINESS LAB / AGENTER</p>
+            <h1 id="agentTitle">Vad vill du testa idag?</h1>
+            <p class="section-intro">I ett framtida labb kan flera agenttyper finnas sida vid sida. I konceptdemot &auml;r en testv&auml;g aktiv.</p>
+          </div>
+
+          <div class="agent-grid">
+            <button class="choice-card active-choice guided-target" type="button" data-go="2">
+              <span class="coachmark">Klicka h&auml;r <span aria-hidden="true">&darr;</span></span>
+              <span class="card-kicker">03 / MULTIMODAL</span>
+              <strong>EML Design Agent</strong>
+              <span>Skiss + text &rarr; responsivt mejlutkast</span>
+              <span class="card-status live">AKTIV I DEMON</span>
+            </button>
+
+            <button class="choice-card" type="button" disabled><span class="card-kicker">01 / SERVICE</span><strong>Kundserviceagent</strong><span>Svarar med st&ouml;d av f&ouml;retagets kunskap</span><span class="card-status">VISION</span></button>
+            <button class="choice-card" type="button" disabled><span class="card-kicker">02 / SALES</span><strong>Offertagent</strong><span>Skapar utkast och kr&auml;ver godk&auml;nnande</span><span class="card-status">VISION</span></button>
+            <button class="choice-card" type="button" disabled><span class="card-kicker">04 / RAG</span><strong>Dokumentagent</strong><span>Hittar svar i valda dokument</span><span class="card-status">VISION</span></button>
+            <button class="choice-card" type="button" disabled><span class="card-kicker">05 / DATA</span><strong>Excelagent</strong><span>F&ouml;rklarar m&ouml;nster och avvikelser</span><span class="card-status">VISION</span></button>
+            <button class="choice-card" type="button" disabled><span class="card-kicker">06 / MEETING</span><strong>M&ouml;tesagent</strong><span>Beslut, ansvar och n&auml;sta steg</span><span class="card-status">VISION</span></button>
+            <button class="choice-card" type="button" disabled><span class="card-kicker">07 / MARKETING</span><strong>Marknadsf&ouml;ringsagent</strong><span>Kampanjid&eacute;er och inneh&aring;ll</span><span class="card-status">VISION</span></button>
+            <button class="choice-card" type="button" disabled><span class="card-kicker">08 / BOOKING</span><strong>Bokningsagent</strong><span>Samlar information och f&ouml;rbereder &auml;renden</span><span class="card-status">VISION</span></button>
+            <button class="choice-card" type="button" disabled><span class="card-kicker">09 / HITL</span><strong>Agent med godk&auml;nnande</strong><span>Stannar n&auml;r m&auml;nniskan m&aring;ste ta &ouml;ver</span><span class="card-status">VISION</span></button>
+            <button class="choice-card" type="button" disabled><span class="card-kicker">10 / SAFETY</span><strong>Eskaleringsagent</strong><span>Vet n&auml;r AI inte ska svara</span><span class="card-status">VISION</span></button>
+          </div>
+          <div class="screen-nav"><button class="btn btn-outline" type="button" data-go="0">&larr; Tillbaka</button></div>
+        </div>
+      </section>
+
+      <section class="screen" data-screen="2" aria-labelledby="companyTitle" hidden>
+        <div class="screen-inner wide">
+          <div class="section-head">
+            <p class="eyebrow">EML DESIGN AGENT / TESTMILJ&Ouml;</p>
+            <h1 id="companyTitle">V&auml;lj ett fiktivt f&ouml;retag</h1>
+            <p class="section-intro">Fiktiva f&ouml;retagsv&auml;rldar g&ouml;r det m&ouml;jligt att experimentera utan riktiga kunduppgifter eller aff&auml;rshemligheter.</p>
+          </div>
+
+          <div class="company-grid">
+            <button class="company-card active-choice guided-target" type="button" data-go="3">
+              <span class="coachmark">V&auml;lj Bosses Verkstad <span aria-hidden="true">&darr;</span></span>
+              <span class="company-monogram" aria-hidden="true">BV</span>
+              <div><span class="card-kicker">BILVERKSTAD / 6 ANST&Auml;LLDA</span><strong>Bosses Verkstad</strong><span>Service, reparationer och kundbokningar</span></div>
+              <span class="card-status live">AKTIV I DEMON</span>
+            </button>
+
+            <button class="company-card" type="button" disabled><span class="company-monogram" aria-hidden="true">63</span><div><span class="card-kicker">CAF&Eacute; + WEBSHOP</span><strong>63&deg; Coffee</strong><span>F&ouml;rs&auml;ljning, inneh&aring;ll och kundservice</span></div><span class="card-status">VISION</span></button>
+            <button class="company-card" type="button" disabled><span class="company-monogram" aria-hidden="true">WC</span><div><span class="card-kicker">BYGGF&Ouml;RETAG</span><strong>West Coast Construction</strong><span>Offerter, projekt och dokumentation</span></div><span class="card-status">VISION</span></button>
+            <button class="company-card" type="button" disabled><span class="company-monogram" aria-hidden="true">SL</span><div><span class="card-kicker">DESIGNSTUDIO</span><strong>Studio Linnea</strong><span>Kundprojekt, marknadsf&ouml;ring och planering</span></div><span class="card-status">VISION</span></button>
+          </div>
+          <div class="screen-nav"><button class="btn btn-outline" type="button" data-go="1">&larr; Tillbaka</button></div>
+        </div>
+      </section>
+
+      <section class="screen" data-screen="3" aria-labelledby="agentHomeTitle" hidden>
+        <div class="screen-inner wide">
+          <div class="lab-context">
+            <span class="company-monogram small" aria-hidden="true">BV</span>
+            <div>
+              <span class="card-kicker">BOSSES VERKSTAD / AI BUSINESS LAB</span>
+              <h1 id="agentHomeTitle">V&auml;lkommen till EML Design Agent</h1>
+              <p>En agent blir mer begriplig n&auml;r du kan se tre saker: vad den g&ouml;r, vilka instruktioner den f&ouml;ljer och vilken kunskap den har tillg&aring;ng till.</p>
+            </div>
+          </div>
+
+          <div class="three-actions">
+            <button class="action-card guided-target" type="button" id="openTest">
+              <span class="coachmark">B&ouml;rja h&auml;r <span aria-hidden="true">&darr;</span></span>
+              <span class="action-no">01</span>
+              <strong>Testa agenten</strong>
+              <span>Se ett styrt chattfl&ouml;de och skapa en riktig .eml-fil.</span>
+              <span class="action-arrow" aria-hidden="true">&rarr;</span>
+            </button>
+            <button class="action-card" type="button" id="openInstructions">
+              <span class="action-no">02</span>
+              <strong>Se agentens instruktioner</strong>
+              <span>Vad f&aring;r agenten g&ouml;ra? Vad f&aring;r den inte g&ouml;ra?</span>
+              <span class="action-arrow" aria-hidden="true">&rarr;</span>
+            </button>
+            <button class="action-card" type="button" id="openKnowledge">
+              <span class="action-no">03</span>
+              <strong>Se agentens kunskap</strong>
+              <span>Vilka filer och fakta f&aring;r agenten anv&auml;nda?</span>
+              <span class="action-arrow" aria-hidden="true">&rarr;</span>
+            </button>
+          </div>
+
+          <div class="principle-strip" aria-label="Agentens grundprincip">
+            <span>UPPGIFT</span><i aria-hidden="true">+</i><span>INSTRUKTIONER</span><i aria-hidden="true">+</i><span>KUNSKAP</span><i aria-hidden="true">+</i><span>GR&Auml;NSER</span>
+          </div>
+
+          <div class="screen-nav"><button class="btn btn-outline" type="button" data-go="2">&larr; Tillbaka</button></div>
+        </div>
+      </section>
+
+      <section class="screen" data-screen="4" aria-labelledby="chatTitle" hidden>
+        <div class="screen-inner ultra-wide chat-screen-inner">
+          <div class="section-head compact-head">
+            <p class="eyebrow">LIVEDEMO / BOSSES VERKSTAD</p>
+            <h1 id="chatTitle">Testa EML Design Agent</h1>
+            <p class="section-intro">Det h&auml;r fl&ouml;det &auml;r f&ouml;rprogrammerat f&ouml;r konceptdemot. Ingen data skickas till en AI-tj&auml;nst.</p>
+          </div>
+
+          <div class="demo-workspace">
+            <section class="chat-panel" aria-label="Simulerad AI-chatt">
+              <div class="panel-title-row"><strong>Agentchatt</strong><span class="safe-pill">FIKTIV DATA</span></div>
+              <div class="chat-log" id="chatLog" aria-live="polite">
+                <div class="message assistant-message">
+                  <div class="avatar">AI</div>
+                  <div class="bubble">Hej! Jag &auml;r Bosses Verkstads EML Design Agent. Klicka i rutan nedan s&aring; visar jag ett exempel.</div>
+                </div>
+              </div>
+
+              <div class="composer-wrap" id="composerWrap">
+                <div class="composer-coach" id="composerCoach">Klicka h&auml;r f&ouml;r att skriva <span aria-hidden="true">&darr;</span></div>
+                <button class="composer" id="composer" type="button" aria-label="Starta det f&ouml;rprogrammerade chattfl&ouml;det">
+                  <span class="composer-text" id="composerText">Skriv vad du vill skapa...</span>
+                  <span class="composer-cursor" id="composerCursor" aria-hidden="true"></span>
+                  <span class="attachment-mini" id="attachmentMini" hidden>
+                    <span class="mini-sketch" aria-hidden="true"><i></i><i></i><i></i></span>
+                    kampanjskiss.jpg
+                  </span>
+                </button>
+                <button class="btn btn-primary send-btn" id="sendDemo" type="button" disabled>Skapa utkast <span aria-hidden="true">&uarr;</span></button>
+              </div>
+            </section>
+
+            <section class="preview-panel" aria-label="E-postf&ouml;rhandsvisning">
+              <div class="panel-title-row">
+                <strong>F&ouml;rhandsvisning</strong>
+                <div class="view-toggle" role="group" aria-label="V&auml;lj f&ouml;rhandsvisning">
+                  <button type="button" class="toggle-btn is-selected" data-preview="desktop">Desktop</button>
+                  <button type="button" class="toggle-btn" data-preview="mobile">Mobil</button>
+                </div>
+              </div>
+              <div class="preview-empty" id="previewEmpty">
+                <div class="preview-empty-icon" aria-hidden="true">EML</div>
+                <strong>Inget utkast &auml;nnu</strong>
+                <span>Agentens resultat visas h&auml;r.</span>
+              </div>
+              <div class="email-frame-wrap" id="emailFrameWrap" hidden>
+                <iframe id="emailFrame" title="F&ouml;rhandsvisning av Bosses Verkstads e-postutkast"></iframe>
+              </div>
+              <div class="download-zone" id="downloadZone" hidden>
+                <div>
+                  <span class="card-kicker">ARBETSPRODUKT</span>
+                  <strong>Bosses-hostkampanj.eml</strong>
+                  <span>En riktig .eml-fil som skapats lokalt i webbl&auml;saren.</span>
+                </div>
+                <button class="btn btn-primary" type="button" id="downloadEml">Ladda ner .eml</button>
+              </div>
+            </section>
+          </div>
+
+          <div class="screen-nav split-nav">
+            <button class="btn btn-outline" type="button" data-go="3">&larr; Till agenten</button>
+            <button class="btn btn-outline" type="button" id="skipChat">Hoppa till resultatet</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" data-screen="5" aria-labelledby="usesTitle" hidden>
+        <div class="screen-inner wide">
+          <div class="section-head">
+            <p class="eyebrow">SAMMA LABB / FLERA M&Aring;LGRUPPER</p>
+            <h1 id="usesTitle">Var kunde Novia AI Business Lab anv&auml;ndas?</h1>
+            <p class="section-intro">Samma tekniska milj&ouml; kan fyllas med olika labbpaket beroende p&aring; m&aring;lgrupp och l&auml;randem&aring;l.</p>
+          </div>
+
+          <div class="use-grid">
+            <article class="use-card">
+              <span class="use-no">01</span>
+              <h2>AI Boost-projekt</h2>
+              <p>Sm&aring;f&ouml;retag f&aring;r uppleva modern AI innan de investerar i egna verktyg eller anv&auml;nder riktig f&ouml;retagsdata.</p>
+              <ul><li>Trygg testmilj&ouml;</li><li>Fiktiva f&ouml;retagscase</li><li>Fr&aring;n demo till egen mikropilot</li></ul>
+            </article>
+            <article class="use-card">
+              <span class="use-no">02</span>
+              <h2>Undervisning</h2>
+              <p>Studerande kan experimentera med agentprinciper utan att varje kurs beh&ouml;ver bygga en egen teknisk milj&ouml;.</p>
+              <ul><li>Instruktioner och kunskap</li><li>RAG, verktyg och HITL</li><li>AI-s&auml;kerhet i praktiken</li></ul>
+            </article>
+            <article class="use-card accented">
+              <span class="use-no">03</span>
+              <h2>F&ouml;retagsutbildning</h2>
+              <p>En &aring;teranv&auml;ndbar workshopmilj&ouml; f&ouml;r praktiska AI-utbildningar d&auml;r deltagarna f&aring;r g&ouml;ra, inte bara lyssna.</p>
+              <ul><li>3-timmars labbworkshops</li><li>10-20 deltagare</li><li>Nya stationer kan l&auml;ggas till</li></ul>
+            </article>
+          </div>
+
+          <div class="screen-nav"><button class="btn btn-outline" type="button" data-go="4">&larr; Tillbaka</button><button class="btn btn-primary" type="button" data-go="6">Hur skulle det byggas? &rarr;</button></div>
+        </div>
+      </section>
+
+      <section class="screen" data-screen="6" aria-labelledby="azureTitle" hidden>
+        <div class="screen-inner wide">
+          <div class="section-head">
+            <p class="eyebrow">F&Ouml;RESLAGEN TEKNISK STRUKTUR</p>
+            <h1 id="azureTitle">En egen bubbla i Novias Azure-milj&ouml;</h1>
+            <p class="section-intro">AI Business Lab kan byggas som en avgr&auml;nsad Azure-milj&ouml; med egna resurser och egna beh&ouml;righeter, utan att deltagarna beh&ouml;ver administrera Azure.</p>
+          </div>
+
+          <div class="architecture">
+            <div class="arch-top">NOVIAS MICROSOFT / AZURE-MILJ&Ouml;</div>
+            <div class="arch-arrow" aria-hidden="true">&darr;</div>
+            <div class="resource-group-box">
+              <div class="resource-group-head"><span>RESOURCE GROUP</span><strong>Novia AI Business Lab</strong></div>
+              <div class="resource-grid">
+                <div><strong>Webbapp</strong><span>Gr&auml;nssnittet deltagarna anv&auml;nder</span></div>
+                <div><strong>AI-tj&auml;nst</strong><span>Gemensam modellkapacitet</span></div>
+                <div><strong>Serverless backend</strong><span>Sm&aring; funktioner n&auml;r n&aring;got h&auml;nder</span></div>
+                <div><strong>Testdata &amp; filer</strong><span>Fiktiva f&ouml;retagsv&auml;rldar</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="access-grid">
+            <article><span class="access-label">ADMIN</span><h2>F&ouml;retagsekonomi</h2><p>Utsedda administrat&ouml;rer kan hantera labbets inneh&aring;ll, stationer och deltagarbeh&ouml;righeter.</p></article>
+            <article><span class="access-label">NOVIA</span><h2>Studerande</h2><p>Kan i en framtida produktionsl&ouml;sning autentiseras med sina Novia-konton.</p></article>
+            <article><span class="access-label">EXTERN</span><h2>F&ouml;retag</h2><p>Kan ges tidsbegr&auml;nsad extern &aring;tkomst. Exakt identitetsl&ouml;sning och policy best&auml;ms tillsammans med Novias IT.</p></article>
+          </div>
+          <div class="fact-note"><strong>Viktigt:</strong> deltagarna anv&auml;nder sj&auml;lva labbet. De beh&ouml;ver inte f&aring; beh&ouml;righet till Azure-portalen.</div>
+
+          <div class="screen-nav"><button class="btn btn-outline" type="button" data-go="5">&larr; Tillbaka</button><button class="btn btn-primary" type="button" data-go="7">Hur fungerar kostnaden? &rarr;</button></div>
+        </div>
+      </section>
+
+      <section class="screen" data-screen="7" aria-labelledby="costTitle" hidden>
+        <div class="screen-inner wide">
+          <div class="section-head">
+            <p class="eyebrow">KOSTNADSLOGIK</p>
+            <h1 id="costTitle">40 studerande beh&ouml;ver inte 40 Copilot-licenser</h1>
+            <p class="section-intro">Om AI Business Lab byggs som en egen Azure-applikation anv&auml;nder deltagarna samma centrala AI-tj&auml;nst bakom labbet.</p>
+          </div>
+
+          <div class="cost-compare">
+            <div class="cost-card crossed">
+              <span class="card-kicker">DET BEH&Ouml;VER INTE VARA</span>
+              <div class="big-equation"><strong>40</strong><span>deltagare</span><i>&times;</i><strong>40</strong><span>individuella AI-licenser</span></div>
+              <p>En personlig Microsoft 365 Copilot-licens &auml;r inte ett krav f&ouml;r att anv&auml;nda en egen Azure-baserad labbapp.</p>
+            </div>
+            <div class="cost-card positive">
+              <span class="card-kicker">AI BUSINESS LAB</span>
+              <div class="big-equation"><strong>1</strong><span>gemensamt labb</span><i>+</i><strong>AI</strong><span>faktisk anv&auml;ndning</span></div>
+              <p>Kostnaden ligger i st&auml;llet fr&auml;mst i den gemensamma infrastrukturen och AI-konsumtionen, till exempel modellens input/output-tokens.</p>
+            </div>
+          </div>
+
+          <div class="cost-drivers">
+            <div><span>01</span><strong>AI-anv&auml;ndning</strong><p>Modell, text, bilder och hur mycket som genereras.</p></div>
+            <div><span>02</span><strong>Drift</strong><p>Hosting/backend kan ofta skalas mycket l&aring;gt vid liten anv&auml;ndning.</p></div>
+            <div><span>03</span><strong>Lagring</strong><p>Testfiler, loggar och eventuell sparad progression.</p></div>
+          </div>
+          <p class="micro-note center-note">Exakt kostnad beror p&aring; vilka Azure-tj&auml;nster och AI-modeller som v&auml;ljs. Po&auml;ngen &auml;r att anv&auml;ndarantalet inte beh&ouml;ver motsvara lika m&aring;nga Copilot-licenser.</p>
+
+          <div class="screen-nav"><button class="btn btn-outline" type="button" data-go="6">&larr; Tillbaka</button><button class="btn btn-primary" type="button" data-go="8">Avsluta visionen &rarr;</button></div>
+        </div>
+      </section>
+
+      <section class="screen finale-screen" data-screen="8" aria-labelledby="finalTitle" hidden>
+        <div class="screen-inner finale-inner">
+          <p class="eyebrow light">VISION</p>
+          <h1 id="finalTitle">T&auml;nk om vi byggde det h&auml;r?</h1>
+          <div class="final-name">NOVIA<br><span>AI BUSINESS LAB</span></div>
+          <p class="final-lead">En gemensam experimentmilj&ouml; f&ouml;r f&ouml;retag, studerande och fortbildning.</p>
+          <div class="final-mantra"><span>TESTA</span><i>&rarr;</i><span>F&Ouml;RST&Aring;</span><i>&rarr;</i><span>TILL&Auml;MPA</span></div>
+          <div class="final-actions"><button class="btn btn-light" type="button" data-go="1">G&aring; in i labbet igen</button><button class="btn btn-light-outline" type="button" data-go="0">B&ouml;rja om fr&aring;n visionen</button></div>
+          <p class="final-foot">Konceptdemo &middot; inte en f&auml;rdig Novia-tj&auml;nst</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <dialog class="modal" id="instructionsModal" aria-labelledby="instructionsTitle">
+    <form method="dialog" class="modal-card">
+      <div class="modal-head"><div><span class="card-kicker">AGENTENS SYSTEMINSTRUKTIONER</span><h2 id="instructionsTitle">Vad har vi sagt &aring;t agenten?</h2></div><button class="modal-close" value="close" aria-label="St&auml;ng">&times;</button></div>
+      <div class="instruction-block">
+        <p><strong>Roll:</strong> Du &auml;r e-postdesignassistent f&ouml;r Bosses Verkstad.</p>
+        <p><strong>Uppgift:</strong> Tolka en enkel skiss och en textbeskrivning. Skapa ett tydligt, responsivt HTML-mejl i f&ouml;retagets grafiska profil.</p>
+        <p><strong>Anv&auml;nd:</strong> Endast den kunskap som finns i labbets godk&auml;nda filer och det anv&auml;ndaren uttryckligen ger dig.</p>
+        <p><strong>Gr&auml;ns:</strong> Du f&aring;r skapa utkast men aldrig skicka e-post, boka tider eller lova n&aring;got &aring;t kunden.</p>
+        <p><strong>M&auml;nniska i kontroll:</strong> Slutresultatet ska alltid granskas innan det anv&auml;nds utanf&ouml;r labbet.</p>
+      </div>
+      <div class="modal-footer"><button class="btn btn-primary" value="close">Tillbaka till agenten</button></div>
+    </form>
+  </dialog>
+
+  <dialog class="modal" id="knowledgeModal" aria-labelledby="knowledgeTitle">
+    <form method="dialog" class="modal-card knowledge-card">
+      <div class="modal-head"><div><span class="card-kicker">AGENTENS KUNSKAP</span><h2 id="knowledgeTitle">Vilken information f&aring;r agenten anv&auml;nda?</h2></div><button class="modal-close" value="close" aria-label="St&auml;ng">&times;</button></div>
+      <div class="knowledge-list">
+        <button type="button" class="knowledge-file is-open" data-knowledge="brand"><span class="file-icon">PDF</span><span><strong>grafisk-profil.pdf</strong><small>F&auml;rger, tonalitet och visuell riktning</small></span><i>+</i></button>
+        <div class="knowledge-detail is-open" data-knowledge-detail="brand"><strong>Bosses Verkstad</strong><p>M&ouml;rkbl&aring; bas, orange accent. Tonen &auml;r varm, rak och jordn&auml;ra. Budskap ska vara tydliga och inte &ouml;verdriva.</p></div>
+        <button type="button" class="knowledge-file" data-knowledge="campaign"><span class="file-icon">TXT</span><span><strong>hostkampanj.txt</strong><small>Godk&auml;nt kampanjbudskap</small></span><i>+</i></button>
+        <div class="knowledge-detail" data-knowledge-detail="campaign"><p>20 % rabatt p&aring; servicearbete under oktober. Kampanjen g&auml;ller endast arbetskostnaden. Kunden ska boka via f&ouml;retagets bokningssida.</p></div>
+        <button type="button" class="knowledge-file" data-knowledge="services"><span class="file-icon">XLSX</span><span><strong>tjanster-och-priser.xlsx</strong><small>Tj&auml;nster som f&aring;r n&auml;mnas i kommunikationen</small></span><i>+</i></button>
+        <div class="knowledge-detail" data-knowledge-detail="services"><p>Service, oljebyte, bromskontroll och s&auml;songskontroll. Agenten ska inte hitta p&aring; priser eller lediga tider.</p></div>
+        <button type="button" class="knowledge-file" data-knowledge="rules"><span class="file-icon">MD</span><span><strong>kundkommunikation.md</strong><small>Regler f&ouml;r vad agenten inte f&aring;r lova</small></span><i>+</i></button>
+        <div class="knowledge-detail" data-knowledge-detail="rules"><p>Mejl &auml;r alltid utkast. Inga kunduppgifter f&aring;r lagras i labbmilj&ouml;n. Os&auml;kra fakta ska markeras eller l&auml;mnas bort.</p></div>
+      </div>
+      <div class="modal-footer"><button class="btn btn-primary" value="close">Tillbaka till agenten</button></div>
+    </form>
+  </dialog>
+
+  <dialog class="modal download-modal" id="downloadModal" aria-labelledby="downloadTitle">
+    <form method="dialog" class="modal-card">
+      <div class="modal-head"><div><span class="card-kicker">WOW - EN RIKTIG ARBETSPRODUKT</span><h2 id="downloadTitle">EML-filen &auml;r nedladdad</h2></div><button class="modal-close" value="close" aria-label="St&auml;ng">&times;</button></div>
+      <div class="download-steps">
+        <div><span>1</span><p>&Ouml;ppna mappen <strong>H&auml;mtade filer / Downloads</strong>.</p></div>
+        <div><span>2</span><p>Dubbelklicka p&aring; <strong>Bosses-hostkampanj.eml</strong>.</p></div>
+        <div><span>3</span><p>Din standardklient f&ouml;r .eml &ouml;ppnar mejlet. Beteendet varierar mellan Outlook, Mail och andra klienter.</p></div>
+      </div>
+      <div class="fact-note"><strong>Ingen riktig AI anv&auml;ndes i konceptdemot.</strong> Filen skapades lokalt i din webbl&auml;sare. I en riktig version kan inneh&aring;llet genereras av Azure AI.</div>
+      <div class="modal-footer"><button class="btn btn-primary" id="continueAfterDownload" value="close">Jag har sett det - forts&auml;tt</button></div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script>
+(function(){
+  'use strict';
+
+  var currentScreen = 0;
+  var totalScreens = 9;
+  var typingStarted = false;
+  var chatFinished = false;
+  var reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var screens = Array.prototype.slice.call(document.querySelectorAll('.screen'));
+  var progressBar = document.getElementById('progressBar');
+  var toast = document.getElementById('toast');
+  var instructionsModal = document.getElementById('instructionsModal');
+  var knowledgeModal = document.getElementById('knowledgeModal');
+  var downloadModal = document.getElementById('downloadModal');
+
+  function showToast(message){
+    toast.textContent = message;
+    toast.classList.add('show');
+    window.setTimeout(function(){toast.classList.remove('show');},2200);
+  }
+
+  function goTo(index){
+    index = Number(index);
+    if(!Number.isFinite(index) || index < 0 || index >= totalScreens){return;}
+    screens.forEach(function(screen){
+      var active = Number(screen.getAttribute('data-screen')) === index;
+      screen.hidden = !active;
+      screen.classList.toggle('is-active',active);
+    });
+    currentScreen = index;
+    progressBar.style.width = (((index + 1) / totalScreens) * 100) + '%';
+    window.scrollTo({top:0,behavior:reducedMotion?'auto':'smooth'});
+    var title = document.querySelector('.screen[data-screen="'+index+'"] h1');
+    if(title){window.setTimeout(function(){title.setAttribute('tabindex','-1');title.focus({preventScroll:true});},reducedMotion?0:220);}
+    if(index === 4 && chatFinished){renderEmailPreview();}
+  }
+
+  document.addEventListener('click',function(event){
+    var go = event.target.closest('[data-go]');
+    if(go){goTo(go.getAttribute('data-go'));}
+  });
+
+  document.getElementById('brandHome').addEventListener('click',function(){goTo(0);});
+  document.getElementById('restartTop').addEventListener('click',function(){resetDemo();goTo(0);});
+
+  document.getElementById('openInstructions').addEventListener('click',function(){instructionsModal.showModal();});
+  document.getElementById('openKnowledge').addEventListener('click',function(){knowledgeModal.showModal();});
+  document.getElementById('openTest').addEventListener('click',function(){goTo(4);});
+
+  Array.prototype.slice.call(document.querySelectorAll('.knowledge-file')).forEach(function(button){
+    button.addEventListener('click',function(){
+      var key = button.getAttribute('data-knowledge');
+      var detail = document.querySelector('[data-knowledge-detail="'+key+'"]');
+      var open = button.classList.toggle('is-open');
+      detail.classList.toggle('is-open',open);
+    });
+  });
+
+  var demoPrompt = 'G\u00f6r ett mejl f\u00f6r Bosses Verkstads h\u00f6stkampanj. 20 % rabatt p\u00e5 service under oktober. Jag har skissat ungef\u00e4r hur jag vill ha layouten. G\u00f6r tonen varm och tydlig och anv\u00e4nd f\u00f6retagets f\u00e4rger.';
+  var composer = document.getElementById('composer');
+  var composerText = document.getElementById('composerText');
+  var composerCoach = document.getElementById('composerCoach');
+  var attachmentMini = document.getElementById('attachmentMini');
+  var sendDemo = document.getElementById('sendDemo');
+  var chatLog = document.getElementById('chatLog');
+  var downloadZone = document.getElementById('downloadZone');
+  var previewEmpty = document.getElementById('previewEmpty');
+  var emailFrameWrap = document.getElementById('emailFrameWrap');
+  var emailFrame = document.getElementById('emailFrame');
+
+  composer.addEventListener('click',function(){
+    if(typingStarted){return;}
+    typingStarted = true;
+    composerCoach.hidden = true;
+    composer.classList.add('is-typing');
+    composerText.textContent = '';
+    typeText(composerText,demoPrompt,reducedMotion?0:24,function(){
+      composer.classList.remove('is-typing');
+      window.setTimeout(function(){
+        attachmentMini.hidden = false;
+        sendDemo.disabled = false;
+        sendDemo.classList.add('guided-target');
+        showToast('Skissen har lagts till. Klicka p\u00e5 Skapa utkast.');
+      },reducedMotion?0:450);
+    });
+  });
+
+  sendDemo.addEventListener('click',function(){
+    if(sendDemo.disabled || chatFinished){return;}
+    sendDemo.disabled = true;
+    sendDemo.classList.remove('guided-target');
+    runChatSequence();
+  });
+
+  document.getElementById('skipChat').addEventListener('click',function(){
+    if(!chatFinished){finishChatImmediately();}
+  });
+
+  function typeText(target,text,speed,callback){
+    if(speed === 0){target.textContent = text;if(callback){callback();}return;}
+    var i = 0;
+    function next(){
+      target.textContent += text.charAt(i);
+      i += 1;
+      if(i < text.length){
+        var ch = text.charAt(i-1);
+        var wait = /[.,!?]/.test(ch) ? speed * 4 : speed + Math.floor(Math.random()*18);
+        window.setTimeout(next,wait);
+      }else if(callback){callback();}
+    }
+    next();
+  }
+
+  function addUserMessage(){
+    var wrapper = document.createElement('div');
+    wrapper.className = 'message user-message';
+    var bubble = document.createElement('div');
+    bubble.className = 'bubble';
+    var text = document.createElement('div');
+    text.textContent = demoPrompt;
+    bubble.appendChild(text);
+    bubble.appendChild(makeSketch());
+    wrapper.appendChild(bubble);
+    chatLog.appendChild(wrapper);
+    scrollChat();
+  }
+
+  function makeSketch(){
+    var sketch = document.createElement('div');
+    sketch.className = 'chat-sketch';
+    sketch.setAttribute('aria-label','Fiktiv handritad skiss f\u00f6r kampanjmejl');
+    sketch.innerHTML = '<div class="paper-line short"></div><div class="paper-line"></div><div class="paper-split"><div class="paper-box"></div><div class="paper-box"></div></div><div class="paper-line"></div><div class="paper-line short"></div><div class="paper-button"></div>';
+    return sketch;
+  }
+
+  function addThinking(){
+    var wrapper = document.createElement('div');
+    wrapper.className = 'message assistant-message agent-step';
+    wrapper.id = 'thinkingMessage';
+    wrapper.innerHTML = '<div class="avatar">AI</div><div class="bubble"><span class="thinking" aria-label="Agenten arbetar"><i></i><i></i><i></i></span></div>';
+    chatLog.appendChild(wrapper);
+    scrollChat();
+  }
+
+  function removeThinking(){
+    var node = document.getElementById('thinkingMessage');
+    if(node){node.remove();}
+  }
+
+  function addAgentMessage(text){
+    removeThinking();
+    var wrapper = document.createElement('div');
+    wrapper.className = 'message assistant-message agent-step';
+    wrapper.innerHTML = '<div class="avatar">AI</div><div class="bubble"></div>';
+    chatLog.appendChild(wrapper);
+    var bubble = wrapper.querySelector('.bubble');
+    if(reducedMotion){bubble.textContent = text;}else{typeText(bubble,text,15);}
+    scrollChat();
+  }
+
+  function scrollChat(){chatLog.scrollTop = chatLog.scrollHeight;}
+
+  function runChatSequence(){
+    addUserMessage();
+    addThinking();
+    var delay = reducedMotion?10:900;
+    window.setTimeout(function(){addAgentMessage('Jag l\u00e4ser skissen och matchar den mot Bosses Verkstads grafiska profil.');addThinking();},delay);
+    window.setTimeout(function(){addAgentMessage('Skissen visar en tydlig kampanjrubrik, en tv\u00e5delad inneh\u00e5llsyta och en stark bokningsknapp.');addThinking();},delay*2.25);
+    window.setTimeout(function(){addAgentMessage('Jag anv\u00e4nder m\u00f6rkbl\u00e5tt, orange accent och en varm, rak tonalitet. Jag hittar inte p\u00e5 priser eller lediga tider.');addThinking();},delay*3.7);
+    window.setTimeout(function(){addAgentMessage('Klart. Jag har skapat ett responsivt HTML-mejl och f\u00f6rberett en .eml-fil. En m\u00e4nniska granskar innan n\u00e5got skickas.');finishChat();},delay*5.2);
+  }
+
+  function finishChatImmediately(){
+    if(!typingStarted){typingStarted = true;composerCoach.hidden = true;composerText.textContent = demoPrompt;attachmentMini.hidden = false;}
+    chatLog.innerHTML = '';
+    chatLog.insertAdjacentHTML('beforeend','<div class="message assistant-message"><div class="avatar">AI</div><div class="bubble">Hej! Jag \u00e4r Bosses Verkstads EML Design Agent.</div></div>');
+    addUserMessage();
+    addAgentMessage('Jag l\u00e4ser skissen och matchar den mot Bosses Verkstads grafiska profil.');
+    addAgentMessage('Jag anv\u00e4nder m\u00f6rkbl\u00e5tt, orange accent och en varm, rak tonalitet.');
+    addAgentMessage('Klart. Jag har skapat ett responsivt HTML-mejl och f\u00f6rberett en .eml-fil.');
+    finishChat();
+  }
+
+  function finishChat(){
+    removeThinking();
+    chatFinished = true;
+    renderEmailPreview();
+    downloadZone.hidden = false;
+    document.getElementById('skipChat').hidden = true;
+    showToast('Utkastet \u00e4r klart. Prova Desktop/Mobil och ladda sedan ner .eml-filen.');
+  }
+
+  function renderEmailPreview(){
+    previewEmpty.hidden = true;
+    emailFrameWrap.hidden = false;
+    emailFrame.srcdoc = emailHtml();
+  }
+
+  Array.prototype.slice.call(document.querySelectorAll('[data-preview]')).forEach(function(button){
+    button.addEventListener('click',function(){
+      document.querySelectorAll('[data-preview]').forEach(function(b){b.classList.remove('is-selected');});
+      button.classList.add('is-selected');
+      var mobile = button.getAttribute('data-preview') === 'mobile';
+      emailFrameWrap.classList.toggle('mobile-mode',mobile);
+    });
+  });
+
+  document.getElementById('downloadEml').addEventListener('click',function(){
+    downloadEml();
+    window.setTimeout(function(){downloadModal.showModal();},150);
+  });
+
+  document.getElementById('continueAfterDownload').addEventListener('click',function(){
+    window.setTimeout(function(){goTo(5);},120);
+  });
+
+  function utf8Base64(str){
+    var bytes = new TextEncoder().encode(str);
+    var binary = '';
+    for(var i=0;i<bytes.length;i++){binary += String.fromCharCode(bytes[i]);}
+    return btoa(binary);
+  }
+
+  function wrapMimeBase64(value){
+    return value.match(/.{1,76}/g).join('\r\n');
+  }
+
+  function downloadEml(){
+    var subject = 'H\u00f6stservice hos Bosses Verkstad - 20 % rabatt i oktober';
+    var html = emailHtml();
+    var eml = [
+      'From: Bosses Verkstad <info@bossesverkstad.example>',
+      'To: ',
+      'Subject: =?UTF-8?B?'+utf8Base64(subject)+'?=',
+      'Date: '+new Date().toUTCString(),
+      'X-Unsent: 1',
+      'MIME-Version: 1.0',
+      'Content-Type: text/html; charset=UTF-8',
+      'Content-Transfer-Encoding: base64',
+      '',
+      wrapMimeBase64(utf8Base64(html))
+    ].join('\r\n');
+    var blob = new Blob([eml],{type:'message/rfc822;charset=utf-8'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'Bosses-hostkampanj.eml';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    window.setTimeout(function(){URL.revokeObjectURL(url);},3000);
+  }
+
+  function emailHtml(){
+    return '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><style>'+
+      'body{margin:0;background:#eceff1;font-family:Arial,Helvetica,sans-serif;color:#102c46}table{border-collapse:collapse}a{text-decoration:none}@media(max-width:620px){.wrap{width:100%!important}.pad{padding-left:22px!important;padding-right:22px!important}.split,.split td{display:block!important;width:100%!important}.split td+td{padding-top:18px!important}.hero-title{font-size:36px!important}.cta{display:block!important;text-align:center!important}}'+
+      '</style></head><body><table role="presentation" width="100%" bgcolor="#eceff1"><tr><td align="center" style="padding:24px 10px"><table role="presentation" width="620" class="wrap" bgcolor="#ffffff" style="width:620px;max-width:620px">'+
+      '<tr><td style="background:#102c46;padding:22px 34px;color:#fff"><table role="presentation" width="100%"><tr><td style="font-size:20px;font-weight:bold">BOSSES VERKSTAD</td><td align="right" style="font-size:12px;color:#d7e0e8">FIKTIV DEMO</td></tr></table></td></tr>'+
+      '<tr><td class="pad" style="background:#102c46;padding:28px 34px 42px;color:#fff"><div style="font-size:12px;letter-spacing:1.8px;font-weight:bold;color:#ffb18c">H\u00d6STKAMPANJ / OKTOBER</div><div class="hero-title" style="font-size:46px;line-height:1.05;font-weight:bold;margin:12px 0 18px">Redo f\u00f6r h\u00f6sten?</div><div style="font-size:23px;line-height:1.35">20 % rabatt p\u00e5 servicearbete i oktober.</div></td></tr>'+
+      '<tr><td class="pad" style="padding:34px"><table role="presentation" width="100%" class="split"><tr><td width="45%" valign="top" style="background:#f3f4f5;padding:24px"><div style="font-size:54px;font-weight:bold;color:#ef6b2e;line-height:1">20%</div><div style="font-size:14px;line-height:1.5;margin-top:12px">p\u00e5 servicearbetet under oktober. Kampanjen g\u00e4ller arbetskostnaden.</div></td><td width="55%" valign="top" style="padding-left:28px"><div style="font-size:23px;font-weight:bold;margin-bottom:12px">Lite omtanke nu. Mindre bekymmer senare.</div><div style="font-size:15px;line-height:1.65;color:#273746">Vi hj\u00e4lper dig att g\u00f6ra bilen redo f\u00f6r kallare dagar. Boka service i oktober och l\u00e5t oss g\u00e5 igenom det viktigaste inf\u00f6r h\u00f6sten.</div><div style="margin-top:22px"><a class="cta" href="https://bossesverkstad.example/boka" style="display:inline-block;background:#ef6b2e;color:#fff;padding:14px 22px;font-weight:bold">Boka service</a></div></td></tr></table></td></tr>'+
+      '<tr><td style="border-top:1px solid #d7dce0;padding:24px 34px;font-size:12px;line-height:1.6;color:#566573">Bosses Verkstad \u00b7 Fiktivt f\u00f6retag i Novia AI Business Lab<br>Detta mejl \u00e4r ett konceptutkast och har inte skickats till n\u00e5gon kund.</td></tr>'+
+      '</table></td></tr></table></body></html>';
+  }
+
+  function resetDemo(){
+    typingStarted = false;
+    chatFinished = false;
+    composerCoach.hidden = false;
+    composer.classList.remove('is-typing');
+    composerText.textContent = 'Skriv vad du vill skapa...';
+    attachmentMini.hidden = true;
+    sendDemo.disabled = true;
+    sendDemo.classList.remove('guided-target');
+    chatLog.innerHTML = '<div class="message assistant-message"><div class="avatar">AI</div><div class="bubble">Hej! Jag \u00e4r Bosses Verkstads EML Design Agent. Klicka i rutan nedan s\u00e5 visar jag ett exempel.</div></div>';
+    previewEmpty.hidden = false;
+    emailFrameWrap.hidden = true;
+    emailFrame.srcdoc = '';
+    downloadZone.hidden = true;
+    document.getElementById('skipChat').hidden = false;
+    emailFrameWrap.classList.remove('mobile-mode');
+    document.querySelectorAll('[data-preview]').forEach(function(b){b.classList.toggle('is-selected',b.getAttribute('data-preview')==='desktop');});
+  }
+
+  window.addEventListener('keydown',function(event){
+    if(event.key === 'Escape'){return;}
+    if(event.altKey && event.key === 'ArrowRight' && currentScreen < totalScreens-1){goTo(currentScreen+1);}
+    if(event.altKey && event.key === 'ArrowLeft' && currentScreen > 0){goTo(currentScreen-1);}
+  });
+
+  goTo(0);
+})();
+
+</script>
+</body>
+</html>
