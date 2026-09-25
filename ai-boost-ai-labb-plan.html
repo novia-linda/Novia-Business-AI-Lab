@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>AI Boost AI-labb – plan för proof of concept och drift</title>
+  <style id="demo-styles">
+    :root{
+      --red:#ff1325;
+      --ink:#151515;
+      --muted:#5f666b;
+      --line:#d9dcde;
+      --soft:#f5f6f6;
+      --soft2:#eceeee;
+      --white:#ffffff;
+      --ok:#176b45;
+      --warn:#8b5a00;
+      --max:1180px;
+      --shadow:0 12px 30px rgba(0,0,0,.08);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:"Be Vietnam Pro","Segoe UI",Arial,sans-serif;
+      color:var(--ink);
+      background:var(--white);
+      line-height:1.58;
+    }
+    a{color:inherit}
+    .topline{height:8px;background:var(--red)}
+    .wrap{width:min(var(--max),calc(100% - 36px));margin:0 auto}
+    header{padding:54px 0 32px;border-bottom:1px solid var(--line)}
+    .eyebrow{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:12px}
+    h1,h2,h3{letter-spacing:-.035em;line-height:1.08;margin:0}
+    h1{font-size:clamp(38px,6vw,70px);max-width:1000px;font-weight:650}
+    h2{font-size:clamp(28px,4vw,42px);font-weight:650}
+    h3{font-size:21px;font-weight:650}
+    .lead{font-size:clamp(18px,2.3vw,23px);max-width:900px;margin:22px 0 0;color:#363b3e}
+    .meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+    .tag{display:inline-flex;align-items:center;min-height:34px;padding:7px 11px;border:1px solid var(--line);background:var(--soft);font-size:13px;font-weight:600}
+    .tag.red{border-color:var(--red);background:#fff4f5;color:#a5000d}
+    main{padding:38px 0 72px}
+    .intro-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:24px;margin-bottom:38px}
+    .panel{border:1px solid var(--line);border-right:6px solid var(--ink);border-bottom:6px solid var(--ink);padding:26px;background:var(--white)}
+    .panel.red-edge{border-right-color:var(--red);border-bottom-color:var(--red)}
+    .panel p:last-child{margin-bottom:0}
+    .big-number{font-size:44px;font-weight:650;letter-spacing:-.05em;margin:4px 0 3px}
+    .muted{color:var(--muted)}
+    .section-head{display:flex;justify-content:space-between;gap:20px;align-items:end;margin:48px 0 18px}
+    .section-head p{max-width:700px;margin:0;color:var(--muted)}
+    .architecture{background:var(--ink);color:var(--white);padding:28px;margin:18px 0 8px;overflow:auto}
+    .flow{display:grid;grid-template-columns:repeat(7,minmax(120px,1fr));gap:10px;align-items:stretch;min-width:900px}
+    .node{border:1px solid #565b5e;padding:16px;background:#202224;min-height:116px}
+    .node strong{display:block;font-size:16px;margin-bottom:7px}
+    .node small{color:#cfd2d3;display:block;line-height:1.45}
+    .arrow{display:flex;align-items:center;justify-content:center;color:var(--red);font-size:28px;font-weight:700}
+    .note{border-left:6px solid var(--red);background:#fff4f5;padding:16px 18px;margin:18px 0}
+    .note strong{display:block;margin-bottom:3px}
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .card{border:1px solid var(--line);padding:20px;min-height:160px;background:var(--white)}
+    .card .icon{font-size:28px;margin-bottom:13px}
+    .card p{margin:9px 0 0;color:var(--muted)}
+    .status{display:inline-block;margin-top:14px;padding:4px 8px;font-size:12px;font-weight:700;border:1px solid var(--line);background:var(--soft)}
+    .status.done{border-color:#b8d9c8;background:#edf7f1;color:var(--ok)}
+    .status.later{border-color:#efd6a1;background:#fff7e5;color:var(--warn)}
+    .details-stack{display:grid;gap:12px}
+    details{border:1px solid var(--line);background:var(--white)}
+    details[open]{border-right:6px solid var(--ink);border-bottom:6px solid var(--ink)}
+    summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:19px 20px;font-weight:650;font-size:17px;min-height:60px}
+    summary::-webkit-details-marker{display:none}
+    summary::after{content:"＋";font-size:22px;line-height:1;color:var(--red);font-weight:500}
+    details[open] summary::after{content:"−"}
+    .detail-body{padding:0 20px 22px;border-top:1px solid var(--line)}
+    .detail-body h3{margin:23px 0 10px;font-size:19px}
+    .detail-body p{margin:10px 0}
+    .detail-body ul{padding-left:22px;margin:10px 0}
+    .detail-body li{margin:6px 0}
+    .detail-body code{font-family:Consolas,"Courier New",monospace;background:var(--soft2);padding:2px 5px}
+    .detail-body pre{background:#17191a;color:#f5f5f5;padding:18px;overflow:auto;font-size:13px;line-height:1.5;border-left:5px solid var(--red)}
+    .toolbar{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}
+    button{font:inherit;min-height:44px;padding:10px 14px;border:1px solid var(--ink);background:var(--ink);color:var(--white);cursor:pointer;font-weight:650}
+    button.secondary{background:var(--white);color:var(--ink)}
+    button:focus-visible, summary:focus-visible, a:focus-visible{outline:3px solid var(--red);outline-offset:3px}
+    .cost-table{width:100%;border-collapse:collapse;margin:16px 0}
+    .cost-table th,.cost-table td{text-align:left;border-bottom:1px solid var(--line);padding:11px 10px;vertical-align:top}
+    .cost-table th{background:var(--soft);font-size:13px;text-transform:uppercase;letter-spacing:.06em}
+    .cost-table td:last-child,.cost-table th:last-child{text-align:right}
+    .roadmap{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:18px}
+    .step{border-top:6px solid var(--ink);background:var(--soft);padding:18px;min-height:215px}
+    .step:nth-child(1){border-top-color:var(--red)}
+    .step .n{font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--muted);text-transform:uppercase}
+    .step h3{margin:8px 0 10px}
+    .decision{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .check{display:flex;gap:11px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line)}
+    .check b{font-size:17px;color:var(--ok)}
+    footer{border-top:1px solid var(--line);padding:28px 0 45px;color:var(--muted);font-size:14px}
+    .small{font-size:13px}
+    @media(max-width:900px){
+      .intro-grid,.decision{grid-template-columns:1fr}
+      .cards{grid-template-columns:1fr 1fr}
+      .roadmap{grid-template-columns:1fr 1fr}
+      .section-head{display:block}.section-head p{margin-top:10px}
+    }
+    @media(max-width:620px){
+      .wrap{width:min(var(--max),calc(100% - 24px))}
+      header{padding-top:38px}
+      .cards,.roadmap{grid-template-columns:1fr}
+      .panel{padding:20px}
+      summary{padding:16px;font-size:16px}
+      .detail-body{padding:0 16px 18px}
+      .cost-table{font-size:13px}
+    }
+  </style>
+</head>
+<body>
+  <div class="topline"></div>
+  <header>
+    <div class="wrap">
+      <div class="eyebrow">AI Boost · konceptunderlag</div>
+      <h1>AI-labb för företagare</h1>
+      <p class="lead">Plan för en avgränsad sandlådemiljö där företagare kan logga in, prova färdiga AI-assistenter och upptäcka vad AI kan göra – utan riktiga företagsdata, utan egna AI-licenser och utan koppling till verksamhetskritiska system.</p>
+      <div class="meta">
+        <span class="tag red">Proof of concept först</span>
+        <span class="tag">20 användare som första målbild</span>
+        <span class="tag">Fiktiv data från början till slut</span>
+        <span class="tag">OpenAI API som AI-motor</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <section class="intro-grid" aria-label="Sammanfattning">
+        <div class="panel red-edge">
+          <div class="eyebrow">Idén i en mening</div>
+          <h2>Ett tryggt AI-provrum, inte ännu ett AI-verktyg att lära sig.</h2>
+          <p>Företagaren ska inte behöva förstå modeller, API:er eller licenser. Hen loggar in, väljer ett scenario, provar och får samtidigt en meny över möjliga AI-användningar i sitt eget företag.</p>
+          <div class="note"><strong>Pedagogiskt mål</strong>Efter att ha testat några agenter ska företagaren lättare kunna säga: ”Det här kunde vara intressant för oss” – och senare formulera ett konkret uppdrag för ett studerandesamarbete.</div>
+        </div>
+        <div class="panel">
+          <div class="eyebrow">Grundprinciper</div>
+          <div class="big-number">4</div>
+          <p class="muted">saker gör lösningen hanterbar:</p>
+          <div class="check"><b>✓</b><div><strong>Pseudonyma konton</strong><br><span class="muted">Till exempel user0001.</span></div></div>
+          <div class="check"><b>✓</b><div><strong>Fiktiv kunskap</strong><br><span class="muted">Inga riktiga företags- eller personuppgifter behövs.</span></div></div>
+          <div class="check"><b>✓</b><div><strong>Tandlösa agenter</strong><br><span class="muted">De svarar och analyserar, men utför inga verkliga handlingar.</span></div></div>
+          <div class="check"><b>✓</b><div><strong>Hård kostnadskontroll</strong><br><span class="muted">Separat API-projekt, användargränser och spend limit.</span></div></div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Målbild</div>
+            <h2>Så ska företagaren uppleva labbet</h2>
+          </div>
+          <p>Första nivån ska vara självinstruerande och enkel. Det tekniska ligger i bakgrunden.</p>
+        </div>
+        <div class="cards">
+          <article class="card"><div class="icon">🔐</div><h3>1. Logga in</h3><p>Företagaren får ett anonymt användarnamn och ett unikt slumpmässigt lösenord.</p><span class="status done">Planerat</span></article>
+          <article class="card"><div class="icon">🧪</div><h3>2. Välj experiment</h3><p>Startsidan visar tydliga kort med olika AI-förmågor – ungefär som en meny.</p><span class="status done">Planerat</span></article>
+          <article class="card"><div class="icon">💬</div><h3>3. Prova</h3><p>Användaren chattar med en färdig agent och kan arbeta med fiktiva dokument eller data.</p><span class="status done">Planerat</span></article>
+          <article class="card"><div class="icon">💡</div><h3>4. Förstå nyttan</h3><p>Varje demo förklarar vad typen av AI kunde användas till i ett riktigt företag.</p><span class="status done">Planerat</span></article>
+          <article class="card"><div class="icon">📌</div><h3>5. Spara idé</h3><p>Senare kan användaren markera intressanta idéer eller användningsfall.</p><span class="status later">Senare steg</span></article>
+          <article class="card"><div class="icon">🎓</div><h3>6. Studerandesamarbete</h3><p>De sparade idéerna kan bli underlag för vad en studerande kunde bygga, testa eller utreda.</p><span class="status later">Senare steg</span></article>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <div><div class="eyebrow">Teknik</div><h2>Föreslagen arkitektur</h2></div>
+          <p>Poängen är att hålla varje komponent enkel och utbytbar. Labbet är inte bundet till ChatGPT-gränssnittet.</p>
+        </div>
+        <div class="architecture" role="img" aria-label="GitHub till Netlify, Supabase och OpenAI API">
+          <div class="flow">
+            <div class="node"><strong>GitHub</strong><small>Kod, versionshantering och vanligt labbmaterial.</small></div>
+            <div class="arrow">→</div>
+            <div class="node"><strong>Netlify Free</strong><small>Publicerar webbappen och kör serverfunktion som skyddar API-nyckeln.</small></div>
+            <div class="arrow">→</div>
+            <div class="node"><strong>Supabase Free</strong><small>Login, användare, rättigheter och eventuell labbdata.</small></div>
+            <div class="arrow">↔</div>
+            <div class="node"><strong>OpenAI API</strong><small>Agenter, modellkörningar och vid behov File Search för fiktiva kunskapsfiler.</small></div>
+          </div>
+        </div>
+        <div class="note"><strong>Viktig arkitekturprincip</strong>Webbläsaren får aldrig OpenAI API-nyckeln. All AI-trafik går via en serverfunktion. ChatGPT Business och OpenAI API är separata tjänster; labbet använder ett eget API-projekt.</div>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <div><div class="eyebrow">Detaljer</div><h2>Klicka för att läsa mera</h2></div>
+          <p>Öppna bara det område du behöver. Alla delar nedan bygger på den plan vi har diskuterat.</p>
+        </div>
+        <div class="toolbar" aria-label="Kontroller för detaljer">
+          <button type="button" id="openAll">Öppna alla</button>
+          <button type="button" class="secondary" id="closeAll">Stäng alla</button>
+        </div>
+        <div class="details-stack">
+
+          <details>
+            <summary>1. Varför inte bygga detta direkt inne i ChatGPT Business?</summary>
+            <div class="detail-body">
+              <p>ChatGPT Business är bra när alla användare hör till samma workspace och har rätt licens. I AI-labbet ska externa företagare däremot kunna använda miljön utan att skaffa egna ChatGPT-licenser.</p>
+              <p>Därför använder labbet <strong>OpenAI API</strong> som motor bakom en egen webbplats. Företagaren ser bara AI Boost-labbet.</p>
+              <h3>Konsekvens</h3>
+              <ul>
+                <li>En agent som är byggd i ChatGPT Business används inte direkt som extern chatbot i POC:n.</li>
+                <li>Instruktioner, kunskapsmaterial och arbetssätt kan däremot återanvändas när motsvarande API-agent konfigureras.</li>
+                <li>Det ger större kontroll över login, gränssnitt, kostnad och framtida vidareutveckling.</li>
+              </ul>
+            </div>
+          </details>
+
+          <details>
+            <summary>2. Vilka AI-experiment ska finnas?</summary>
+            <div class="detail-body">
+              <p>POC:n ska börja litet. Två eller tre tydliga experiment räcker för att bevisa konceptet.</p>
+              <h3>Första förslag</h3>
+              <ul>
+                <li><strong>Kundserviceassistent:</strong> visar hur en chatbot kan svara konsekvent utifrån ett fiktivt företags behov.</li>
+                <li><strong>Fråga dokument:</strong> visar RAG/File Search med en liten fiktiv kunskapsbas.</li>
+                <li><strong>Dataanalys:</strong> visar hur AI kan resonera kring en liten fiktiv CSV-/Excel-liknande datamängd.</li>
+              </ul>
+              <h3>Kan läggas till senare</h3>
+              <ul>
+                <li>Research-agent.</li>
+                <li>Marknadsföringsassistent.</li>
+                <li>AI + människa / godkännande före nästa steg.</li>
+                <li>”När AI inte ska svara” och eskalering.</li>
+                <li>Agent som får ett mål och planerar flera steg.</li>
+              </ul>
+              <p>Varje kort bör också innehålla <strong>”Vad demonstrerar detta?”</strong> och <strong>”Vad kunde ditt företag använda detta till?”</strong>.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>3. Material: vad ligger på GitHub och vad ligger hos OpenAI?</summary>
+            <div class="detail-body">
+              <p><strong>GitHub</strong> passar för vanligt labbmaterial: introduktioner, instruktioner, exempel, konceptförklaringar, bilder och kod.</p>
+              <p>Material som en agent faktiskt ska kunna <strong>söka semantiskt i som kunskapsbas</strong> kan i POC:n läggas i OpenAI File Search/vector store. Då behöver vi inte bygga en egen RAG-lösning i Supabase.</p>
+              <pre>/material/
+  intro-ai.md
+  kundservice.md
+  dataanalys.md
+
+OpenAI knowledge:
+  fictional-company-info.pdf
+  fictional-faq.pdf
+  fictional-products.pdf</pre>
+              <p>Allt material är fiktivt och kan därför delas och testas utan att labbet behöver tillgång till deltagarnas riktiga dokument.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>4. Login och användare i Supabase</summary>
+            <div class="detail-body">
+              <p>Supabase Free räcker kapacitetsmässigt för den planerade användningen. Vi accepterar gratisplanens begränsningar i utbyte mot att hålla den fasta kostnaden nere.</p>
+              <h3>Kontomodell</h3>
+              <pre>user0001  → unikt slumpmässigt lösenord
+user0002  → unikt slumpmässigt lösenord
+user0003  → unikt slumpmässigt lösenord</pre>
+              <ul>
+                <li>Användarnamnen avslöjar inte deltagarens namn eller företag.</li>
+                <li>Lösenorden ska inte vara enkla som <code>xyz</code>, utan genereras slumpmässigt och individuellt.</li>
+                <li>Supabase Auth sköter autentisering och hashning av lösenord.</li>
+                <li>Vi bygger inte ett eget lösenordssystem i databasen.</li>
+              </ul>
+              <p>Om Supabase kräver e-postformat kan applikationen internt mappa ett synligt användarnamn till ett tekniskt alias, medan deltagaren fortfarande bara ser <code>user0001</code>.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>5. Säkerhetsmodell: sandlåda från början till slut</summary>
+            <div class="detail-body">
+              <p>Riskbilden blir avsiktligt låg eftersom labbet inte behöver riktiga företagsdata eller kopplingar till riktiga system.</p>
+              <h3>Det som inte ska finnas i första versionen</h3>
+              <ul>
+                <li>Inga riktiga kunduppgifter eller personuppgifter.</li>
+                <li>Inga konfidentiella företagsdokument.</li>
+                <li>Ingen åtkomst till OneDrive, SharePoint, e-post, ERP eller CRM.</li>
+                <li>Ingen möjlighet att skicka mejl, skapa fakturor, göra beställningar eller utföra andra verkliga handlingar.</li>
+                <li>Inga hemliga nycklar i frontend eller GitHub.</li>
+              </ul>
+              <h3>Det vi ändå skyddar</h3>
+              <ul>
+                <li><strong>Supabase RLS:</strong> en användare får bara nå sina egna rader/sessioner.</li>
+                <li><strong>Server-side API:</strong> OpenAI-nyckeln ligger endast som hemlig environment variable i hostingen.</li>
+                <li><strong>MFA:</strong> på administratörskonton för GitHub, Netlify, Supabase och OpenAI.</li>
+                <li><strong>Separat OpenAI-projekt:</strong> endast för labbet.</li>
+                <li><strong>Rate limits:</strong> till exempel max 100 AI-anrop per användare och månad.</li>
+                <li><strong>Spend limit:</strong> en låg hård budgetgräns för API-projektet.</li>
+              </ul>
+              <div class="note"><strong>Tydlig användarregel</strong>”AI Lab är en sandlådemiljö. Använd endast fiktiv information. Lägg inte in kunduppgifter, personuppgifter, konfidentiell företagsinformation eller andra verkliga känsliga uppgifter.”</div>
+            </div>
+          </details>
+
+          <details>
+            <summary>6. Vad händer om någon försöker missbruka labbet?</summary>
+            <div class="detail-body">
+              <p>I den här konstruktionen är den viktigaste kvarvarande risken inte datastöld utan <strong>obehörig användning av AI-budgeten</strong>.</p>
+              <h3>Skydd i flera lager</h3>
+              <ul>
+                <li>Unika och starka lösenord gör enkel kontogissning svårare.</li>
+                <li>Varje konto får en användningsgräns.</li>
+                <li>Prompts kan begränsas i längd och svar i antal tokens.</li>
+                <li>OpenAI-projektet får en låg hård kostnadsgräns.</li>
+                <li>API-nyckeln är inte tillgänglig för användaren.</li>
+              </ul>
+              <p>Prompt injection är fortfarande möjligt att demonstrera, men konsekvensen hålls liten eftersom agenten bara har fiktiv kunskap och inga externa verktyg.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>7. Hosting: varför Netlify Free i stället för Vercel Hobby?</summary>
+            <div class="detail-body">
+              <p>Vercel var vårt första förslag, men Hobby-planens användningsvillkor gör den mindre lämplig när labbet blir ett verkligt arbets-/projektverktyg.</p>
+              <p>Netlify Free är därför den föreslagna startlösningen, eftersom vi kan acceptera gratisplanens begränsningar och hålla de fasta kostnaderna nära noll.</p>
+              <h3>Netlify gör tre saker</h3>
+              <ul>
+                <li>Publicerar webbappen från GitHub.</li>
+                <li>Kör serverfunktioner mellan webbappen och OpenAI.</li>
+                <li>Förvarar API-nyckeln i environment variables i stället för i frontend.</li>
+              </ul>
+              <p class="small muted">Plan- och kapacitetsgränser ska alltid verifieras mot aktuella villkor innan skarp lansering.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>8. Kostnadsbild</summary>
+            <div class="detail-body">
+              <p>För den planerade volymen – ungefär 20 företagare och omkring 50 AI-förfrågningar totalt per månad – är AI-användningen mycket liten. Målet är därför att undvika onödiga fasta plattformsavgifter.</p>
+              <table class="cost-table">
+                <thead><tr><th>Del</th><th>Plan i första riktiga versionen</th><th>Ungefärlig fast kostnad</th></tr></thead>
+                <tbody>
+                  <tr><td>GitHub</td><td>Gratis</td><td>0 €</td></tr>
+                  <tr><td>Netlify</td><td>Free, så länge begränsningarna fungerar</td><td>0 €</td></tr>
+                  <tr><td>Supabase</td><td>Free, så länge begränsningarna fungerar</td><td>0 €</td></tr>
+                  <tr><td>OpenAI API</td><td>Pay as you go / prepaid</td><td>Rörlig, sannolikt låg</td></tr>
+                  <tr><td>Domän</td><td>Valfritt</td><td>Liten årlig kostnad</td></tr>
+                </tbody>
+              </table>
+              <p>Med så låg användning kan den totala löpande kostnaden mycket väl bli <strong>några tiotals euro per år</strong> plus eventuell domän, så länge gratisplanerna fortsätter passa användningen.</p>
+              <p>För budgetkontroll används ett separat OpenAI-projekt med låg spend limit. Exakta priser och gratisplansgränser verifieras före lansering.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>9. Proof of concept: minsta fungerande version</summary>
+            <div class="detail-body">
+              <p>POC:n ska svara på en enda fråga: <strong>”Fungerar den här typen av AI-labb som upplevelse för en extern företagare?”</strong></p>
+              <h3>POC 0.1</h3>
+              <ul>
+                <li>GitHub-repo.</li>
+                <li>Netlify Free-deployment.</li>
+                <li>Supabase Free med cirka 3–5 testkonton.</li>
+                <li>Ett separat OpenAI API-projekt med liten prepaid-budget.</li>
+                <li>En enkel startsida efter login.</li>
+                <li>Två agentkort: exempelvis Kundservice och Fråga dokument.</li>
+                <li>Fiktivt företag och fiktiva kunskapsfiler.</li>
+                <li>En tydlig sandlådebanner.</li>
+              </ul>
+              <p>Adminpanel, statistik, idébank och många agenttyper behövs inte för att bevisa konceptet.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>10. När POC:n blir en riktig projektmiljö</summary>
+            <div class="detail-body">
+              <p>När riktiga företagare får konton behåller vi samma grundarkitektur men kvalitetssäkrar den.</p>
+              <ul>
+                <li>20 pseudonyma konton skapas.</li>
+                <li>RLS och åtkomstregler testas med två separata användare.</li>
+                <li>MFA är aktiverat på alla administratörskonton.</li>
+                <li>OpenAI spend limit och per-user rate limit aktiveras.</li>
+                <li>Instruktionen om endast fiktiv information visas tydligt vid login och i labbet.</li>
+                <li>Backup-/exportbehov för Supabase bestäms.</li>
+                <li>Rutiner finns för att återställa/stänga av användarkonton.</li>
+                <li>Aktuella villkor för Netlify, Supabase och OpenAI verifieras.</li>
+              </ul>
+              <p>Om gratisplanerna senare blir opraktiska kan Netlify eller Supabase uppgraderas utan att hela lösningen behöver byggas om.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>11. Vad vi medvetet skjuter på framtiden</summary>
+            <div class="detail-body">
+              <ul>
+                <li>Riktiga företagsdokument och personlig data.</li>
+                <li>Microsoft-/Google-login och organisationens Entra-miljö.</li>
+                <li>Riktiga connectors till Teams, Outlook, SharePoint, ERP eller CRM.</li>
+                <li>Agenter som genomför verkliga handlingar.</li>
+                <li>Avancerad analytics och användarspårning.</li>
+                <li>Komplex adminportal.</li>
+                <li>Multi-provider AI där samma labb även kör exempelvis Microsoft Foundry eller Gemini.</li>
+              </ul>
+              <p>Att skjuta på dessa delar är en säkerhets- och utvecklingsstrategi: vi bevisar först pedagogiken och användarupplevelsen.</p>
+            </div>
+          </details>
+
+          <details>
+            <summary>12. Möjlig framtida utveckling</summary>
+            <div class="detail-body">
+              <p>Om AI-labbet fungerar kan det växa utan att grundidén ändras.</p>
+              <ul>
+                <li><strong>Fler experiment:</strong> RAG, research, HITL, eskalering, automation och multimodal AI.</li>
+                <li><strong>Idébank:</strong> företagaren markerar vilka lösningar som känns relevanta.</li>
+                <li><strong>Studerandebrygga:</strong> valda idéer omvandlas till ett enkelt brief-underlag.</li>
+                <li><strong>Flera AI-leverantörer:</strong> ett labbkort kan i framtiden använda OpenAI och ett annat Microsoft eller Google.</li>
+                <li><strong>Adminöversikt:</strong> vilka labb används, utan att samla in mer persondata än nödvändigt.</li>
+              </ul>
+              <p>Målet är då att plattformen blir ett <strong>AI-labb</strong> – inte ett ChatGPT-labb.</p>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <div><div class="eyebrow">Väg framåt</div><h2>Fyra steg från idé till pilot</h2></div>
+          <p>Varje steg kan avslutas utan att nästa måste genomföras. Det håller experimentet litet och reversibelt.</p>
+        </div>
+        <div class="roadmap">
+          <article class="step"><div class="n">Steg 1</div><h3>Bygg POC</h3><p>Login, startsida, två agenter och helt fiktiv kunskap. Testa själv.</p></article>
+          <article class="step"><div class="n">Steg 2</div><h3>Intern test</h3><p>Låt några kollegor agera företagare. Testa enkelhet, instruktioner och säkerhetsregler.</p></article>
+          <article class="step"><div class="n">Steg 3</div><h3>Liten pilot</h3><p>Skapa ett begränsat antal externa pseudonyma konton och följ upp vad de faktiskt provar.</p></article>
+          <article class="step"><div class="n">Steg 4</div><h3>Projektversion</h3><p>Utöka agentmenyn, lägg till idébank och skapa en tydlig brygga till studerandesamarbeten.</p></article>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <div><div class="eyebrow">Beslutsläge</div><h2>Det som redan är ganska tydligt</h2></div>
+          <p>Det här är arbetsantaganden från planeringen – inte ännu formella projektbeslut.</p>
+        </div>
+        <div class="decision">
+          <div class="panel">
+            <h3>Föreslagen start</h3>
+            <div class="check"><b>✓</b><div>GitHub för kod och vanligt material.</div></div>
+            <div class="check"><b>✓</b><div>Netlify Free för hosting och serverfunktion.</div></div>
+            <div class="check"><b>✓</b><div>Supabase Free för Auth och enkel databas.</div></div>
+            <div class="check"><b>✓</b><div>OpenAI API i separat projekt.</div></div>
+            <div class="check"><b>✓</b><div>Endast fiktiva data och tandlösa agenter.</div></div>
+          </div>
+          <div class="panel red-edge">
+            <h3>Öppna val senare</h3>
+            <div class="check"><b>→</b><div>Exakt antal och typ av agenter i pilotversionen.</div></div>
+            <div class="check"><b>→</b><div>Om chatthistorik ska sparas och hur länge.</div></div>
+            <div class="check"><b>→</b><div>Om labbet behöver egen domän.</div></div>
+            <div class="check"><b>→</b><div>När/om gratisplaner ska uppgraderas.</div></div>
+            <div class="check"><b>→</b><div>Om en framtida version ska stödja fler AI-leverantörer.</div></div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <strong>AI Boost AI-labb · konceptunderlag</strong><br>
+      Sammanställt utifrån planeringen i denna diskussion. Kostnader, kvoter och tjänstevillkor är föränderliga och bör verifieras mot respektive leverantör före skarp lansering.
+    </div>
+  </footer>
+
+  <script id="demo-script">
+    const allDetails = [...document.querySelectorAll('details')];
+    document.getElementById('openAll').addEventListener('click', () => {
+      allDetails.forEach(d => d.open = true);
+    });
+    document.getElementById('closeAll').addEventListener('click', () => {
+      allDetails.forEach(d => d.open = false);
+      document.querySelector('.details-stack').scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  </script>
+</body>
+</html>
