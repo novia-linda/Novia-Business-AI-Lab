@@ -64,7 +64,7 @@ h2{font-size:clamp(26px,3vw,36px);line-height:1.2}
 .card-status{margin-top:auto;align-self:flex-start;background:var(--grey);padding:5px 8px;font-size:10px;font-weight:600;letter-spacing:.08em}.card-status.live{background:var(--black);color:var(--white)}
 .guided-target{margin-top:28px}.coachmark{position:absolute;top:-34px;left:18px;background:var(--red);color:var(--white);padding:6px 10px;font-size:12px;font-weight:600;z-index:2;box-shadow:3px 3px 0 var(--black);white-space:nowrap;animation:pulseCoach 1.6s ease-in-out infinite}
 @keyframes pulseCoach{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
-.screen-nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:40px;flex-wrap:wrap}.split-nav{margin-top:24px}
+.screen-nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:40px;flex-wrap:wrap}.nav-group{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.split-nav{margin-top:24px}
 .company-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
 .company-card{min-height:190px;display:grid;grid-template-columns:72px 1fr;grid-template-rows:1fr auto;column-gap:20px;align-items:start}.company-card .card-status{grid-column:2}.company-monogram{width:68px;height:68px;display:grid;place-items:center;background:var(--black);color:var(--white);font-size:24px;font-weight:600;letter-spacing:-.04em}.company-monogram.small{width:60px;height:60px;font-size:20px}
 .company-card div{display:flex;flex-direction:column;gap:8px}
@@ -103,7 +103,7 @@ body.conversation-open{overflow:hidden}
 .stage-finish{max-width:none!important;margin:0!important;border-top:1px solid var(--black);flex:0 0 auto}.stage-finish .btn{white-space:nowrap}
 .toast{z-index:400}
 @media (max-width:1050px){.agent-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.demo-workspace{grid-template-columns:1fr}.chat-panel,.preview-panel{min-height:520px}.resource-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.resource-grid div{border-bottom:1px solid var(--line)}.resource-grid div:nth-child(2){border-right:0}.use-grid{grid-template-columns:1fr}.use-card{min-height:0}.three-actions{grid-template-columns:1fr}.action-card{min-height:180px}.hero-grid{grid-template-columns:1fr}.hero-panel{max-width:720px}.access-grid{grid-template-columns:1fr}}
-@media (max-width:760px){.demo-start-card,.conversation-finish{align-items:stretch;flex-direction:column}.demo-start-card .btn,.conversation-finish .btn{width:100%}.demo-start-card{padding:20px}.chat-panel.chat-only{min-height:580px}.chat-panel.chat-only .chat-log{min-height:430px;max-height:520px}.result-intro{grid-template-columns:1fr}.topbar{padding:10px 16px;min-height:64px}.progress-wrap{top:64px}.brand-lab{display:none}.concept-badge{display:none}.screen{padding:34px 16px 50px;min-height:calc(100svh - 68px)}h1{font-size:36px}.lead{font-size:18px}.agent-grid,.company-grid,.cost-compare,.cost-drivers{grid-template-columns:1fr}.choice-card,.company-card{min-height:0}.company-card{grid-template-columns:58px 1fr}.company-monogram{width:54px;height:54px;font-size:19px}.company-card .card-status{grid-column:2}.guided-target{margin-top:32px}.lab-context{grid-template-columns:1fr}.demo-workspace{display:block}.preview-panel{margin-top:18px}.chat-log{max-height:430px}.composer-wrap{grid-template-columns:1fr}.send-btn{min-height:48px}.download-zone{align-items:flex-start;flex-direction:column}.resource-group-head{flex-direction:column;align-items:flex-start}.resource-grid{grid-template-columns:1fr}.resource-grid div{border-right:0}.cost-card{min-height:0}.screen-nav{align-items:stretch}.screen-nav .btn{width:100%}.finale-inner{text-align:left}.final-mantra,.final-actions{justify-content:flex-start}.modal-head,.instruction-block,.knowledge-list,.modal-footer{padding-left:18px;padding-right:18px}.modal-head h2{font-size:26px}.knowledge-detail{margin-left:0}.topbar-meta{gap:8px}.restart-link{font-size:12px}}
+@media (max-width:760px){.demo-start-card,.conversation-finish{align-items:stretch;flex-direction:column}.demo-start-card .btn,.conversation-finish .btn{width:100%}.demo-start-card{padding:20px}.chat-panel.chat-only{min-height:580px}.chat-panel.chat-only .chat-log{min-height:430px;max-height:520px}.result-intro{grid-template-columns:1fr}.topbar{padding:10px 16px;min-height:64px}.progress-wrap{top:64px}.brand-lab{display:none}.concept-badge{display:none}.screen{padding:34px 16px 50px;min-height:calc(100svh - 68px)}h1{font-size:36px}.lead{font-size:18px}.agent-grid,.company-grid,.cost-compare,.cost-drivers{grid-template-columns:1fr}.choice-card,.company-card{min-height:0}.company-card{grid-template-columns:58px 1fr}.company-monogram{width:54px;height:54px;font-size:19px}.company-card .card-status{grid-column:2}.guided-target{margin-top:32px}.lab-context{grid-template-columns:1fr}.demo-workspace{display:block}.preview-panel{margin-top:18px}.chat-log{max-height:430px}.composer-wrap{grid-template-columns:1fr}.send-btn{min-height:48px}.download-zone{align-items:flex-start;flex-direction:column}.resource-group-head{flex-direction:column;align-items:flex-start}.resource-grid{grid-template-columns:1fr}.resource-grid div{border-right:0}.cost-card{min-height:0}.screen-nav{align-items:stretch}.screen-nav .btn{width:100%}.nav-group{width:100%;display:grid;grid-template-columns:1fr}.finale-inner{text-align:left}.final-mantra,.final-actions{justify-content:flex-start}.modal-head,.instruction-block,.knowledge-list,.modal-footer{padding-left:18px;padding-right:18px}.modal-head h2{font-size:26px}.knowledge-detail{margin-left:0}.topbar-meta{gap:8px}.restart-link{font-size:12px}}
 
 @media (max-width:760px){
   .conversation-stage{height:100dvh}
@@ -145,8 +145,9 @@ body.conversation-open{overflow:hidden}
             <p class="lead">Utan egen AI-infrastruktur. Utan att b&ouml;rja med k&auml;nsliga data. Utan att varje deltagare beh&ouml;ver en egen Copilot-licens.</p>
             <div class="hero-actions">
               <button class="btn btn-primary" type="button" data-go="1">G&aring; in i AI Business Lab <span aria-hidden="true">&rarr;</span></button>
+              <a class="btn btn-outline" href="ai-boost-ai-labb-plan.html">Se hur AI-labbet kan byggas <span aria-hidden="true">&rarr;</span></a>
             </div>
-            <p class="micro-note">Styrd interaktiv konceptdemo. Allt f&ouml;retagsinneh&aring;ll &auml;r fiktivt.</p>
+            <p class="micro-note">Styrd interaktiv konceptdemo. Allt f&ouml;retagsinneh&aring;ll &auml;r fiktivt. Den tekniska planen &ouml;ppnas som en separat sida i samma GitHub Pages-milj&ouml;.</p>
           </div>
         </div>
       </section>
@@ -304,7 +305,10 @@ body.conversation-open{overflow:hidden}
             </section>
 
             <div class="screen-nav">
-              <button class="btn btn-outline" type="button" data-go="4">&larr; Se konversationen igen</button>
+              <div class="nav-group">
+                <button class="btn btn-outline" type="button" data-go="3">&larr; Till agent&ouml;versikten</button>
+                <button class="btn btn-outline" type="button" data-go="4">Se konversationen igen</button>
+              </div>
               <button class="btn btn-primary" type="button" data-go="6">Forts&auml;tt: vad kan labbet anv&auml;ndas till? &rarr;</button>
             </div>
           </div>
